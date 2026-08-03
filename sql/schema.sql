@@ -11,7 +11,7 @@ CREATE sequence seq_deptno
     start with 1
     increment by 1
     maxvalue 999;
-    
+
 
 /* employeeテーブル */
 CREATE TABLE employee (
@@ -154,26 +154,6 @@ CREATE sequence seq_cusno
     maxvalue 999;
 
 
-/* orders_detailテーブル */
-CREATE TABLE orders_detail (
-    /* 注文明細ID：主キー */
-    det_id int ,
-    /* 注文ID */
-    ord_id int,
-    /* 商品ID */
-    pro_id int,
-    /* 購入数 */
-    counts int,
-    primary key (det_id),
-    FOREIGN key (ord_id) references orders (ord_id),
-    FOREIGN key (pro_id) references product (pro_id)
-);
-
-CREATE sequence seq_detno
-    start with 1
-    increment by 1
-    maxvalue 999;
-
 
 /* payment_methodテーブル */
 CREATE TABLE payment_method (
@@ -215,3 +195,22 @@ CREATE sequence seq_ordno
     increment by 1
     maxvalue 999;
 
+/* orders_detailテーブル */
+CREATE TABLE orders_detail (
+    /* 注文明細ID：主キー */
+    det_id int ,
+    /* 注文ID */
+    ord_id int,
+    /* 商品ID */
+    pro_id int,
+    /* 購入数 */
+    counts int,
+    primary key (det_id),
+    FOREIGN key (ord_id) references orders (ord_id),
+    FOREIGN key (pro_id) references product (pro_id)
+);
+
+CREATE sequence seq_detno
+    start with 1
+    increment by 1
+    maxvalue 999;
