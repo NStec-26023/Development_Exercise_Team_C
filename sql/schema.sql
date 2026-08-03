@@ -116,7 +116,7 @@ CREATE TABLE order_status (
     sta_id int ,
     /* 注文ステータス名：100文字以内で保存 */
     name VARCHAR(100),
-    primary key (sta_id),
+    primary key (sta_id)
 );
 
 CREATE sequence seq_stano
@@ -145,10 +145,46 @@ CREATE TABLE customer (
     password VARCHAR(225),
     /* 登録日 */
     created_at TIMESTAMP,
-    primary key (cus_id),
+    primary key (cus_id)
 );
 
 CREATE sequence seq_cusno
+    start with 1
+    increment by 1
+    maxvalue 999;
+
+
+/* orders_detailテーブル */
+CREATE TABLE orders_detail (
+    /* 注文明細ID：主キー */
+    det_id int ,
+    /* 注文ID */
+    ord_id int,
+    /* 商品ID */
+    pro_id int,
+    /* 購入数 */
+    counts int,
+    primary key (det_id),
+    FOREIGN key (ord_id) references orders (ord_id),
+    FOREIGN key (pro_id) references product (pro_id)
+);
+
+CREATE sequence seq_detno
+    start with 1
+    increment by 1
+    maxvalue 999;
+
+
+/* payment_methodテーブル */
+CREATE TABLE payment_method (
+    /* 支払い方法ID：主キー */
+    pay_id int ,
+    /* 支払い方法名：100文字以内で保存 */
+    name VARCHAR(100),
+    primary key (pay_id)
+);
+
+CREATE sequence seq_payno
     start with 1
     increment by 1
     maxvalue 999;
@@ -169,8 +205,8 @@ CREATE TABLE orders (
     /* 支払い方法ID */
     pay_id int,
     primary key (ord_id),
-    FOREIGN key (cus_id) references customer (cus_id)
-    FOREIGN key (sta_id) references order_status (sta_id)
+    FOREIGN key (cus_id) references customer (cus_id),
+    FOREIGN key (sta_id) references order_status (sta_id),
     FOREIGN key (pay_id) references payment_method (pay_id)
 );
 
@@ -178,41 +214,4 @@ CREATE sequence seq_ordno
     start with 1
     increment by 1
     maxvalue 999;
-
-
-/* orders_detailテーブル */
-CREATE TABLE orders_detail (
-    /* 注文明細ID：主キー */
-    det_id int ,
-    /* 注文ID */
-    ord_id int,
-    /* 商品ID */
-    pro_id int,
-    /* 購入数 */
-    count int,
-    primary key (det_id),
-    FOREIGN key (ord_id) references orders (ord_id)
-    FOREIGN key (pro_id) references product (pro_id)
-);
-
-CREATE sequence seq_detno
-    start with 1
-    increment by 1
-    maxvalue 999;
-
-
-/* payment_methodテーブル */
-CREATE TABLE payment_method (
-    /* 支払い方法ID：主キー */
-    pay_id int ,
-    /* 支払い方法名：100文字以内で保存 */
-    name VARCHAR(100),
-    primary key (pay_id),
-);
-
-CREATE sequence seq_payno
-    start with 1
-    increment by 1
-    maxvalue 999;
-
 
