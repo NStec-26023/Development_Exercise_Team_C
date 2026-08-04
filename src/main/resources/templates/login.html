@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン画面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 24px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            /* 緑色のブロック */
+            border: none;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: #218838;
+        }
+
+        .register-link-container {
+            margin-top: 20px;
+        }
+
+        .register-link {
+            color: #218838;
+            text-decoration: none;
+            /* アンダーバー（下線）を消す */
+            font-size: 14px;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+            /* ホバーした時だけ下線を表示する場合 */
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>ログイン</h2>
+
+        <!-- エラーメッセージ表示 -->
+        <div th:if="${param.error}" class="error-message">
+            メールアドレスまたはパスワードが違います。
+        </div>
+
+        <!-- ログインフォーム -->
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <!-- プレースホルダーに「メールアドレス」の文字 -->
+                <input type="email" id="username" name="username" placeholder="メールアドレス" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <!-- プレースホルダーに「パスワード」の文字 -->
+                <input type="password" id="password" name="password" placeholder="パスワード" required>
+            </div>
+
+            <!-- 緑色のログインボタン -->
+            <button type="submit" class="btn-login">ログイン</button>
+        </form>
+
+        <!-- 下部のアンダーバーがないアカウント登録リンク -->
+        <div class="register-link-container">
+            <a th:href="@{/register}" class="register-link">アカウント登録</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
