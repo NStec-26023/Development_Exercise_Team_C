@@ -8,7 +8,7 @@ CREATE TABLE department (
 );
 
 CREATE sequence seq_deptno
-    start with 1
+    start with 101
     increment by 1
     maxvalue 999;
 
@@ -28,9 +28,9 @@ CREATE TABLE employee (
 );
 
 CREATE sequence seq_empno
-    start with 1
+    start with 1001
     increment by 1
-    maxvalue 999;
+    maxvalue 9999;
 
 
 /* employee_accountテーブル */
@@ -48,7 +48,7 @@ CREATE TABLE employee_account (
 );
 
 CREATE sequence seq_accno
-    start with 1
+    start with 001
     increment by 1
     maxvalue 999;
 
@@ -63,7 +63,7 @@ CREATE TABLE product_category (
 );
 
 CREATE sequence seq_catno
-    start with 1
+    start with 101
     increment by 1
     maxvalue 999;
 
@@ -87,7 +87,7 @@ CREATE TABLE product (
 );
 
 CREATE sequence seq_prono
-    start with 1
+    start with 001
     increment by 1
     maxvalue 999;
 
@@ -105,9 +105,9 @@ CREATE TABLE product_sto (
 );
 
 CREATE sequence seq_stono
-    start with 1
+    start with 1001
     increment by 1
-    maxvalue 999;
+    maxvalue 9999;
 
 
 /* order_statusテーブル */
@@ -120,7 +120,7 @@ CREATE TABLE order_status (
 );
 
 CREATE sequence seq_stano
-    start with 1
+    start with 101
     increment by 1
     maxvalue 999;
 
@@ -149,9 +149,9 @@ CREATE TABLE customer (
 );
 
 CREATE sequence seq_cusno
-    start with 1
+    start with 10001
     increment by 1
-    maxvalue 999;
+    maxvalue 99999;
 
 
 
@@ -165,7 +165,7 @@ CREATE TABLE payment_method (
 );
 
 CREATE sequence seq_payno
-    start with 1
+    start with 001
     increment by 1
     maxvalue 999;
 
@@ -211,6 +211,6 @@ CREATE TABLE orders_detail (
 );
 
 CREATE sequence seq_detno
-    start with 1
+    start with 101
     increment by 1
     maxvalue 999;
