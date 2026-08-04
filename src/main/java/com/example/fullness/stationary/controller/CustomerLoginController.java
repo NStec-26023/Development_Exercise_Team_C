@@ -28,7 +28,7 @@ public class CustomerLoginController {
     }
 
     @GetMapping
-    public String showLoginForm() {
+    public String showLogin() {
         return "login"; // templates/login.html などを指す
     }
 
