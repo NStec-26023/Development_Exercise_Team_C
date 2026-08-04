@@ -33,7 +33,7 @@ public class CustomerLoginController {
     }
 
     @PostMapping
-    public String login(@Validated CustomerLoginForm loginForm, BindingResult bindingResult) {
+    public String login(@Validated CustomerLoginForm customerLoginForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/login";
         }

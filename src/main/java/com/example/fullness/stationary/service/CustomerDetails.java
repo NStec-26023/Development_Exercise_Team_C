@@ -20,7 +20,7 @@ public class CustomerDetails implements UserDetails {
     }
 
     public String getUsername() {
-        return customer.getDisplayName();
+        return customer.getMailAddress();
     }
 
     @Override
