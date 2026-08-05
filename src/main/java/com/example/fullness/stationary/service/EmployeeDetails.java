@@ -5,31 +5,28 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.fullness.stationary.entity.Customer;
+import com.example.fullness.stationary.entity.EmployeeAccount;
 
-public class CustomerDetails implements UserDetails {
-    private final Customer customer;
+public class EmployeeDetails implements UserDetails {
+    private final EmployeeAccount employeeAccount;
     private final Collection<GrantedAuthority> authorities;
 
-    public CustomerDetails(Customer customer, Collection<GrantedAuthority> authorities) {
-        this.customer = customer;
+    public EmployeeDetails(EmployeeAccount employeeAccount, Collection<GrantedAuthority> authorities) {
+        this.employeeAccount = employeeAccount;
         this.authorities = authorities;
     }
 
     public String getPassword() {
-        return customer.getPassword();
+        return employeeAccount.getPassword();
     }
 
     public String getUsername() {
-        return customer.getMailAddress();
-    }
-
-    public Customer getCustomer() {
-        return customer;
+        return employeeAccount.getName();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // 権限リストを返す（空）
         return authorities;
     }
 

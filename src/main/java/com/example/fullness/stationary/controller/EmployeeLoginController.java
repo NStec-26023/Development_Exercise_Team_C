@@ -9,31 +9,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.example.fullness.stationary.controller.form.CustomerLoginForm;
+import com.example.fullness.stationary.controller.form.EmployeeLoginForm;
 
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/")
+@RequestMapping("/admin")
 @Controller
 @RequiredArgsConstructor
-@SessionAttributes(names = { "Customer", "CustomerLoginForm" })
-public class CustomerLoginController {
+@SessionAttributes(names = { "EmployeeAccount", "EmployeeLoginForm" })
+public class EmployeeLoginController {
 
-    /**
-     * リクエスト毎に呼ばれる
-     */
     @ModelAttribute
-    public CustomerLoginForm setUpCustomerLoginForm() {
-        return new CustomerLoginForm();
+    public EmployeeLoginForm setUpEmployeeLoginForm() {
+        return new EmployeeLoginForm();
     }
 
     @GetMapping("login")
     public String showLogin() {
-        return "login"; // templates/login.html などを指す
+        return "admin/login"; // templates/admin/login.html
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "index"; // templates/index.html を返す
+    @GetMapping("index")
+    public String admin() {
+        return "admin/index";
     }
+    // @PostMapping
+    // public String login(@Validated EmployeeLoginForm employeeLoginForm,
+    // BindingResult bindingResult) {
+    // if (bindingResult.hasErrors()) {
+    // return "/admin/login";
+    // }
+    // return "redirect:/index";
+    // }
 }
