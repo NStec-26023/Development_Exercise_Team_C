@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.fullness.stationary.repository.EmployeeAccountRepository">
+<!-- 社員名で社員１件取得 -->
+    <select id="findByName" resultType="com.example.fullness.stationary.entity.EmployeeAccount">
+         <![CDATA[
+        SELECT * FROM employee_account
+        WHERE name = #{name}
+        ]]>
+    </select>
+
+<!-- 未登録の社員を抽出する -->
+    <select id="selectUnregisteredEmployees" resultType="com.example.fullness.stationary.entity.Employee">
+        SELECT e.emp_id, e.name
+        FROM employee e 
+        LEFT JOIN employee_account ea ON e.name = ea.name 
+        WHERE ea.emp_id IS NULL
+    </select>
+
+<!-- アカウントデータを挿入するクエリ -->
+    <insert id="insertAccount" parameterType="com.example.fullness.stationary.entity.EmployeeAccount">
+        INSERT INTO employee_account (acc_id, name, password, emp_id) 
+        VALUES ( #001から自動採番, #{name}, #{password}, #{emp_id})
+    </insert>
+
+
+</mapper>

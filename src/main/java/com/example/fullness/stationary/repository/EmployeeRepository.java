@@ -8,7 +8,5 @@ import com.example.fullness.stationary.entity.Employee;
 
 @Mapper
 public interface EmployeeRepository {
-    List<Employee> selectUnregisteredEmployees();
 
-    void insertEmployeeAccount(Employee employee);
 }

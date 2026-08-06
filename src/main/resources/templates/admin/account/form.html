@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>担当者登録</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select,
+        input[type="text"],
+        input[type="password"] {
+            width: 320px;
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>担当者新規登録</h2>
+    <!-- メッセージ表示 -->
+    <div th:if="${errorMessage}" class="message error" th:text="${errorMessage}"></div>
+    <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
+    <form th:action="@{/staff/register}" th:object="${staffForm}" method="post">
+
+        <!-- 社員選択のセレクトボックス -->
+        <div class="form-group">
+            <label for="employeeId">対象社員:</label>
+            <select id="employeeId" th:field="*{employeeId}" required>
+                <option value="">-- 社員を選択してください --</option>
+                <option th:each="emp : ${unregisteredEmployees}" th:value="${emp.id}" th:text="${emp.name}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="username">アカウント名:</label>
+            <input type="text" id="username" th:field="*{username}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" th:field="*{password}" required>
+        </div>
+
+        <button type="submit">登録する</button>
+    </form>
+</body>
+
+</html>
