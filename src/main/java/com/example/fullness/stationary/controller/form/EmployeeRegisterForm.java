@@ -12,13 +12,13 @@ import lombok.Data;
 @Data
 public class EmployeeRegisterForm implements Serializable {
     @NotNull(message = "社員を選択してください。")
-    private String emp_name; // 選択された社員の名前
+    private String empName; // 選択された社員の名前
 
     @NotBlank(message = "アカウント名を入力してください。")
     @Size(min = 5, max = 20, message = "アカウント名は5文字以上20文字以内で入力してください。")
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "アカウント名は半角英数字で入力してください。")
     // ToDo:重複値確認バリデーション追加
-    private String account_name;
+    private String accountName;
 
     @NotBlank(message = "パスワードを入力してください。")
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "パスワードは半角英数字で入力してください。")

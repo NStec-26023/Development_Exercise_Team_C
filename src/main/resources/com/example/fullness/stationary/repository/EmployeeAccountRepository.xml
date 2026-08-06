@@ -22,7 +22,7 @@
 <!-- アカウントデータを挿入するクエリ -->
     <insert id="insertAccount" parameterType="com.example.fullness.stationary.entity.EmployeeAccount">
         INSERT INTO employee_account (acc_id, name, password, emp_id) 
-        VALUES ( #001から自動採番, #{name}, #{password}, #{emp_id})
+        VALUES ( #001から自動採番, #{name}, #{password}, #{empId})
     </insert>
 
 

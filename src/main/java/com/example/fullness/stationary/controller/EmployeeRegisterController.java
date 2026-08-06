@@ -32,26 +32,10 @@ public class EmployeeRegisterController {
     }
 
     /**
-     * 実際の登録処理 (POST /register/complete)
-     * 確認画面の「登録する」ボタンから呼び出され、DB登録後に完了画面へリダイレクトします。
-     */
-    @PostMapping("/complete")
-    public String registerAccount(
-            @Valid @ModelAttribute("employeeRegisterForm") EmployeeRegisterForm employeeRegisterForm,
-            BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("unregisteredEmployees", employeeRegisterService.getUnregisteredEmployees());
-            return "redirect:/admin/account/form";
-        }
-        employeeRegisterService.registerAccount(employeeRegisterForm);
-        return "redirect:admin/account/complete";
-    }
-
-    /**
      * 2. 確認画面へ遷移 (POST /register/confirm)
      * 入力内容のバリデーション（アカウント名の重複チェック含む）を実行します。
      */
-    @PostMapping("/confirm")
+    @PostMapping(value = "confirm")
     public String showConfirm(
             @Validated @ModelAttribute("employeeRegisterForm") EmployeeRegisterForm employeeRegisterForm,
             BindingResult bindingResult, Model model) {
@@ -63,4 +47,19 @@ public class EmployeeRegisterController {
         return "admin/account/confirm";
     }
 
+    /**
+     * 実際の登録処理 (POST /register/complete)
+     * 確認画面の「登録する」ボタンから呼び出され、DB登録後に完了画面へリダイレクトします。
+     */
+    @PostMapping(value = "complete")
+    public String registerAccount(
+            @Valid @ModelAttribute("employeeRegisterForm") EmployeeRegisterForm employeeRegisterForm,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("unregisteredEmployees", employeeRegisterService.getUnregisteredEmployees());
+            return "redirect:/admin/account/form";
+        }
+        employeeRegisterService.registerAccount(employeeRegisterForm);
+        return "redirect:admin/account/complete";
+    }
 }

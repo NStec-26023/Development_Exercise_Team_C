@@ -29,16 +29,8 @@ public class EmployeeLoginController {
         return "admin/login"; // templates/admin/login.html
     }
 
-    @GetMapping("index")
+    @GetMapping("")
     public String admin() {
-        return "admin/index";
+        return "admin/menu";
     }
-    // @PostMapping
-    // public String login(@Validated EmployeeLoginForm employeeLoginForm,
-    // BindingResult bindingResult) {
-    // if (bindingResult.hasErrors()) {
-    // return "/admin/login";
-    // }
-    // return "redirect:/index";
-    // }
 }

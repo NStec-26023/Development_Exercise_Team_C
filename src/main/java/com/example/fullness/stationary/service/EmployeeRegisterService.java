@@ -28,7 +28,7 @@ public class EmployeeRegisterService {
     @Transactional
     public void registerAccount(EmployeeRegisterForm employeeRegisterForm) {
         EmployeeAccount employeeAccount = new EmployeeAccount();
-        employeeAccount.setName(employeeRegisterForm.getEmp_name());
+        employeeAccount.setName(employeeRegisterForm.getEmpName());
         employeeAccount.setPassword(passwordEncoder.encode(employeeRegisterForm.getPassword()));
 
         employeeAccountRepository.insertAccount(employeeAccount);

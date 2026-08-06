@@ -20,7 +20,8 @@ public class SecurityConfig {
                 http
                                 .securityMatcher("/admin/**") // /admin/ 以下のリクエストにのみ適用
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/admin/login").permitAll() // ログイン画面などは認証不要
+                                                .requestMatchers("/admin/login", "/admin")
+                                                .permitAll() // ログイン画面などは認証不要
                                                 .anyRequest().hasRole("emp") // その他はEMPLOYEEロールが必要
                                 )
                                 .formLogin(form -> form
