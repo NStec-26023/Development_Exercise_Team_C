@@ -1,0 +1,18 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<update id="updateById" parameterType="com.example.fullness.stationary.entity.Product" >
+
+        <![CDATA[
+        UPDATE product 
+        SET 
+            name = #{name},
+            price = #{price},
+            image_url = #{imageUrl},
+            cat_id = #{catId}
+        WHERE 
+            pro_id = #{proId}
+        ]]>
+
+</update> -->

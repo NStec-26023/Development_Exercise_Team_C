@@ -8,7 +8,7 @@
 <body>
     <!-- <div align="center"> -->
        <h2>商品検索</h2><br>
-        <form th:action="@{/products/search}" method="POST" th:object="${productCategoryForm}">
+        <form th:action="@{/admin/product}" method="POST" th:object="${productCategoryForm}">
             <select th:field = "*{catId}">
             <!-- <select name = "catId"> -->
             <option value="0">選択してください</option>

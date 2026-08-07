@@ -21,22 +21,24 @@ public class ProductSearchService {
     @Autowired
     private ProductSearchRepository productSearchRepository;
 
-    public List<Product>findAll(){
-        return productSearchRepository.selectAll();
-    }
-
     public List<ProductCategory>findAllProductCategory(){
         return productSearchRepository.selectAllProductCategory();
     }
 
     public List<Product> findByCategory(Integer catId){
-         if (catId == null ||catId == 0) {
+        if (catId == null) {
             return productSearchRepository.selectAll();
-        } else {
-            return productSearchRepository.selectByCatId(catId);
         }
-  
+        return productSearchRepository.selectByCatId(catId);
     }
+        
+  
+    // public List<Product> findByCategoryAndPage(Integer catId, int page) {
+    //     return null; 
+    // }
+    //  public int getTotalPages(Integer catId) {
+    //     return 0; 
+    // }
     
 }
 
