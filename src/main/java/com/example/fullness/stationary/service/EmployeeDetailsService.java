@@ -31,7 +31,7 @@ public class EmployeeDetailsService implements UserDetailsService {
     }
 
     private Collection<GrantedAuthority> getAuthorities(EmployeeAccount employeeAccount) {
-        // 例として全員に "ROLE_CUSTOMER" を付与する場合
+
         return AuthorityUtils.createAuthorityList("ROLE_EMPLOYEE");
     }
 }

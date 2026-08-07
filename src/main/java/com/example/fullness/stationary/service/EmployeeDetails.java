@@ -24,28 +24,22 @@ public class EmployeeDetails implements UserDetails {
         return employeeAccount.getName();
     }
 
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 権限リストを返す（空）
         return authorities;
     }
 
-    @Override
     public boolean isAccountNonExpired() {
         return true; // アカウントが期限切れでない（trueで固定）
     }
 
-    @Override
     public boolean isAccountNonLocked() {
         return true; // アカウントがロックされていない（trueで固定）
     }
 
-    @Override
     public boolean isCredentialsNonExpired() {
         return true; // パスワードが期限切れでない（trueで固定）
     }
 
-    @Override
     public boolean isEnabled() {
         return true; // アカウントが有効である（trueで固定）
     }

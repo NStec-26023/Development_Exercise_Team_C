@@ -9,7 +9,7 @@ import com.example.fullness.stationary.entity.EmployeeAccount;
 
 @Mapper
 public interface EmployeeAccountRepository {
-    //
+    // Spring Securityログイン機能用
     EmployeeAccount findByName(String name);
 
     // 未登録の社員を抽出
