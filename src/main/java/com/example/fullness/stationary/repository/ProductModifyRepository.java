@@ -1,12 +1,18 @@
-// package com.example.fullness.stationary.repository;
+package com.example.fullness.stationary.repository;
 
-// import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.example.fullness.stationary.entity.Product;
 
 
 
-// @Mapper
-// public interface ProductModifyRepository {
+@Mapper
+public interface ProductModifyRepository {
 
-//     Integer updateByProId(Integer proId);
+    Product selectByProId(Integer proId);
 
-// }
+    Integer updateByProId(Integer proId);
+
+}

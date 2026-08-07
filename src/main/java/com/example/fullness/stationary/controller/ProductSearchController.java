@@ -36,8 +36,8 @@ public class ProductSearchController {
             model.addAttribute("selectedCategoryId", catId);
 
 
-            List<Product> list = productSearchService.findByCategory(catId);
-            model.addAttribute("products", list);
+            List<Product> products = productSearchService.findByCategory(catId);
+            model.addAttribute("products", products);
 
             // List<Product> products = productSearchService.findByCategoryAndPage(catId, page);
             // int totalPages = productSearchService.getTotalPages(catId); 
