@@ -44,7 +44,7 @@ CREATE TABLE employee_account (
     /* 社員ID */
     emp_id integer,
     primary key (acc_id),
-    FOREIGN key (acc_id) references employee (emp_id)
+    FOREIGN key (emp_id) references employee (emp_id)
 );
 
 CREATE sequence seq_accno
@@ -83,7 +83,7 @@ CREATE TABLE product (
     /* 削除フラグ */
     delete_flg integer,
     primary key (pro_id),
-    FOREIGN key (pro_id) references product_category (cat_id)
+    FOREIGN key (cat_id) references product_category (cat_id)
 );
 
 CREATE sequence seq_prono
