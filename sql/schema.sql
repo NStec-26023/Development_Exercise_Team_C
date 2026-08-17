@@ -92,8 +92,8 @@ CREATE sequence seq_prono
     maxvalue 999;
 
 
-/* product_stoテーブル */
-CREATE TABLE product_sto (
+/* product_stockテーブル */
+CREATE TABLE product_stock (
     /* 商品在庫ID：主キー */
     sto_id integer ,
     /* 商品在庫数 */
