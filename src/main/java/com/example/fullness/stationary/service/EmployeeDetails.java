@@ -32,8 +32,9 @@ public class EmployeeDetails implements UserDetails {
         return true; // アカウントが期限切れでない（trueで固定）
     }
 
+    @Override
     public boolean isAccountNonLocked() {
-        return true; // アカウントがロックされていない（trueで固定）
+        return employeeAccount.isAccountNonLocked(); // アカウントがロックされていない（trueで固定）
     }
 
     public boolean isCredentialsNonExpired() {
