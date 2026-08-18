@@ -50,37 +50,4 @@ public class ProductSearchController {
         }
     }
 
-    // @ModelAttribute("category")
-    // public List<ProductCategory> setUpCategories() {
-    //     List<ProductCategory> list =  productSearchService.findAllProductCategory();
-
-    //     return list;
-    // }
-    // @ModelAttribute("productCategoryForm")
-    // public ProductCategoryForm setUpForm() {
-    //     return new ProductCategoryForm();
-    // }
-    // @GetMapping("/search")
-    // public String showSearchForm(Model model) {
-
-    //     List<ProductCategory> productCategory = productSearchService.findAllProductCategory();
-
-    //     model.addAttribute("category", productCategory);
-
-    //     List<Product> allProducts = productSearchService.findAll();
-
-    //     model.addAttribute("productList", allProducts);
-        
-    //     return "admin/product/search"; 
-    // }
-//     @PostMapping("/search")
-//     public String searchProducts(@ModelAttribute ProductCategoryForm productCategoryForm,Model model) {
-//     // public String searchProducts(@RequestParam(required = false) Integer catId,Model model) {
-        
-//         List<Product> list = productSearchService.findByCategory(productCategoryForm.getCatId());
-        
-//         model.addAttribute("productList", list);
-        
-//         return "admin/product/search";
-//     }
-// }
+    

@@ -15,6 +15,6 @@ public class ProductModifyForm implements Serializable {
     private Integer price;
     private Integer stock;
     private Integer catId;
-    private String imagePath;
+    private String imageUrl;
     private MultipartFile image;
 }

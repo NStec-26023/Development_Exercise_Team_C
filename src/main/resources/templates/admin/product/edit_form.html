@@ -17,7 +17,7 @@
             <li th:each="msg : ${errorMessages}" th:text="${msg}"></li>
         </ul>
 
-        <form th:action="@{/admin/product/edit/{id}(id=${form.id})}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/admin/product/edit/{id}(id=${form.proId})}" method="post" enctype="multipart/form-data">
             <div class="mb-3 row">
                 <label class="col-sm-4 col-form-label">商品名</label>
                 <div class="col-sm-8">
@@ -41,9 +41,9 @@
                 <div class="col-sm-8">
                     <select name="categoryId" class="form-select">
                         <option th:each="cat : ${categories}"
-                                th:value="${cat.id}"
+                                th:value="${cat.catId}"
                                 th:text="${cat.name}"
-                                th:selected="${form.categoryId != null and form.categoryId == cat.id}"></option>
+                                th:selected="${form.catId != null and form.catId == catId}"></option>
                     </select>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="text-center mb-3">
-                <img th:src="@{${form.imagePath}}" th:alt="${form.name}" class="img-fluid" style="max-height: 160px;">
+                <img th:src="@{${form.imageUrl}}" th:alt="${form.name}" class="img-fluid" style="max-height: 160px;">
             </div>
             <div class="text-center mt-4">
                 <a th:href="@{/admin/product}" class="btn btn-link link-fs">キャンセル</a>
