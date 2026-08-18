@@ -27,7 +27,7 @@ public class EmployeeDetailsService implements UserDetailsService {
     public EmployeeDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         // 1. メモリ上でロックされているかチェック
         if (employeeLoginAttemptService.isBlocked(name)) {
-            throw new LockedException("アカウントがロックされています。管理者にお問い合わせください。");
+            throw new LockedException("アカウントがロックされています。管理者にお問い合わせください");
         }
         // 2. データベースから社員アカウントを検索
         EmployeeAccount employeeAccount = employeeAccountRepository.findByName(name);
