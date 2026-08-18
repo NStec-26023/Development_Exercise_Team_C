@@ -17,6 +17,10 @@ public interface ProductModifyRepository {
 
     ProductStock selectByProIdWithProduct(Integer proId);
 
-    // Integer updateByProId(ProductStock productStock);
+    String selectCatNameByCatId(Integer catId);
+
+    Integer updateProductStock(ProductStock productStock);
+
+    Integer updateProduct(Product product); 
 
 }

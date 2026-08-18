@@ -17,4 +17,5 @@ public class ProductModifyForm implements Serializable {
     private Integer catId;
     private String imageUrl;
     private MultipartFile image;
+    private String catName;
 }

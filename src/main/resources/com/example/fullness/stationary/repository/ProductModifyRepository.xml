@@ -36,11 +36,31 @@
         ]]>
 
 </select>
+<select id="selectCatNameByCatId" resultType="java.lang.String">
 
-<!-- <update id="updateByProId" parameterType="com.example.fullness.stationary.entity.ProductStock" >
+        <![CDATA[
+        SELECT name FROM product_category
+        WHERE cat_id = #{catId}
+
+        ]]>
+
+</select>
+
+<update id="updateProductStock" parameterType="com.example.fullness.stationary.entity.ProductStock" >
 
         <![CDATA[
         UPDATE product_stock 
+        SET 
+        quantity = #{quantity}  
+        WHERE 
+            pro_id = #{proId}
+        ]]>
+
+</update>
+<update id="updateProduct" parameterType="com.example.fullness.stationary.entity.Product" >
+
+        <![CDATA[
+        UPDATE product 
         SET 
             name = #{name},
             price = #{price},
@@ -50,5 +70,5 @@
             pro_id = #{proId}
         ]]>
 
-</update> -->
+</update>
 </mapper> 

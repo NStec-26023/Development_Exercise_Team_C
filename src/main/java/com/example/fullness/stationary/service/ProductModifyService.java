@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.fullness.stationary.entity.Product;
 import com.example.fullness.stationary.entity.ProductCategory;
 import com.example.fullness.stationary.entity.ProductStock;
 import com.example.fullness.stationary.repository.ProductModifyRepository;
@@ -25,8 +26,16 @@ public class ProductModifyService {
         return productModifyRepository.selectByProIdWithProduct(proId);
     }
 
-    // public void updateProductStock(ProductStock productStock) {
-    //     productModifyRepository.updateByProId(productStock);
-    // }
+    public String findCatNameByCatId(Integer catId){
+        return productModifyRepository.selectCatNameByCatId(catId);
+    }
+
+    public void updateProductStock(ProductStock productStock) {
+        productModifyRepository.updateProductStock(productStock);
+    }
+
+    public void updateProduct(Product product) {
+        productModifyRepository.updateProduct(product);
+    }
 
 }

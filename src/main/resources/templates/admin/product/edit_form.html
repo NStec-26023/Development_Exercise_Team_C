@@ -39,11 +39,11 @@
             <div class="mb-3 row">
                 <label class="col-sm-4 col-form-label">商品カテゴリ</label>
                 <div class="col-sm-8">
-                    <select name="categoryId" class="form-select">
+                    <select name="catId" class="form-select">
                         <option th:each="cat : ${categories}"
                                 th:value="${cat.catId}"
                                 th:text="${cat.name}"
-                                th:selected="${form.catId != null and form.catId == catId}"></option>
+                                th:selected="${form.catId != null and form.catId == cat.catId}"></option>
                     </select>
                 </div>
             </div>
