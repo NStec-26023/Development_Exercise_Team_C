@@ -24,25 +24,42 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
-        // フォームから送信されたユーザー名（社員IDやメールアドレスなど）を取得
+        // フォームから送信されたユーザー名を取得
         String username = request.getParameter("username");
 
-        // ★ ここにログを出してみる
-        System.out.println(">>> 認証失敗ハンドラーが呼ばれました！");
+        // ログを出してみる
+        System.out.println(">>> 認証失敗ハンドラーが呼ばれました");
         System.out.println(">>> 失敗したユーザー名: " + username);
-        //
+        System.out.println(">>> 発生した例外: " + exception.getClass().getName() + " : " + exception.getMessage());
 
         if (username != null && !username.isBlank()) {
             loginAttemptService.loginFailed(username);
         }
 
-        // ロック例外による失敗か、通常のパスワード間違いかでリダイレクト先（パラメータ）を分ける
-        if (exception instanceof LockedException) {
+        //
+        // 2. ユーザーが現在ブロック（ロック）されている状態かどうかをサービス層で直接確認する！
+        boolean isLocked = false;
+        if (username != null && !username.isBlank()) {
+            isLocked = loginAttemptService.isBlocked(username);
+        }
+
+        // または例外のチェインに LockedException が含まれているかもチェック
+        if (!isLocked) {
+            Throwable cause = exception.getCause();
+            while (cause != null) {
+                if (cause instanceof LockedException
+                        || (cause.getMessage() != null && cause.getMessage().contains("ロック"))) {
+                    isLocked = true;
+                    break;
+                }
+                cause = cause.getCause();
+            }
+        }
+        // 3. 判定結果に応じてリダイレクト先を分ける
+        if (isLocked) {
             response.sendRedirect(request.getContextPath() + "/admin/login?locked");
         } else {
             response.sendRedirect(request.getContextPath() + "/admin/login?error");
-
         }
-        // super.onAuthenticationFailure(request, response, exception);
     }
 }

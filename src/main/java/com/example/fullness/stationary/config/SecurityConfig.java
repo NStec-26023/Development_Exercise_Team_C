@@ -1,5 +1,8 @@
 package com.example.fullness.stationary.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +15,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.fullness.stationary.entity.EmployeeAccount;
 import com.example.fullness.stationary.repository.CustomerRepository;
 import com.example.fullness.stationary.repository.EmployeeAccountRepository;
 import com.example.fullness.stationary.service.CustomAuthenticationFailureHandler;
 import com.example.fullness.stationary.service.CustomAuthenticationSuccessHandler;
 // import com.example.fullness.stationary.service.CustomerDetailsService;
 import com.example.fullness.stationary.service.EmployeeDetailsService;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 @Configuration
 @EnableWebSecurity
