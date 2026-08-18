@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.example.fullness.stationary.repository.CustomerRepository;
 import com.example.fullness.stationary.repository.EmployeeAccountRepository;
 import com.example.fullness.stationary.service.CustomAuthenticationFailureHandler;
 import com.example.fullness.stationary.service.CustomAuthenticationSuccessHandler;
