@@ -9,17 +9,29 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.fullness.stationary.repository.CustomerRepository;
 import com.example.fullness.stationary.repository.EmployeeAccountRepository;
+import com.example.fullness.stationary.service.CustomAuthenticationFailureHandler;
+import com.example.fullness.stationary.service.CustomAuthenticationSuccessHandler;
 // import com.example.fullness.stationary.service.CustomerDetailsService;
 import com.example.fullness.stationary.service.EmployeeDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+        private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+        private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+        public SecurityConfig(CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+                        CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+                this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+                this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        }
 
         // @Autowired
         // EmployeeDetailsService employeeDetailsService;
@@ -45,8 +57,10 @@ public class SecurityConfig {
                                                 .loginProcessingUrl("/admin/login-process") // フォームの送信先
                                                 .usernameParameter("username")
                                                 .passwordParameter("password")
+                                                .successHandler(customAuthenticationSuccessHandler)
+                                                .failureHandler(customAuthenticationFailureHandler)
                                                 .defaultSuccessUrl("/admin", true) // ログイン成功後の遷移先
-                                                .failureUrl("/admin/login")
+                                                // .failureUrl("/admin/login") //ハンドラーに処理を任せる
                                                 .permitAll())
                                 // ログアウト制御
                                 .logout(logout -> logout

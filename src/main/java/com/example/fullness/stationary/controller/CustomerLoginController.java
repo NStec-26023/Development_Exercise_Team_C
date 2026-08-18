@@ -9,23 +9,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.example.fullness.stationary.controller.form.CustomerLoginForm;
-
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/")
 @Controller
-@RequiredArgsConstructor
-@SessionAttributes(names = { "Customer", "CustomerLoginForm" })
+// @RequiredArgsConstructor
+// @SessionAttributes(names = { "Customer", "CustomerLoginForm" })
 public class CustomerLoginController {
 
     /**
      * リクエスト毎に呼ばれる
      */
-    @ModelAttribute
-    public CustomerLoginForm setUpCustomerLoginForm() {
-        return new CustomerLoginForm();
-    }
+    // @ModelAttribute
+    // public CustomerLoginForm setUpCustomerLoginForm() {
+    // return new CustomerLoginForm();
+    // }
 
     @GetMapping("login")
     public String showLogin() {
