@@ -23,7 +23,7 @@ public class EmployeeAccountController {
     public String showRegisterForm(Model model) {
         model.addAttribute("employeeRegisterForm", new EmployeeRegisterForm());
         model.addAttribute("unRegisteredEmployeeList", employeeRegisterService.getUnregisteredEmployeeList());
-        return "employee/account-register";
+        return "admin/account/register";
     }
 
     // 登録処理の実行
