@@ -10,17 +10,37 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 import java.io.IOException;
 
-//認証失敗ハンドラー
+/**
+ * 認証失敗時の処理をカスタム制御するハンドラクラスです。
+ * ログイン失敗回数のカウントアップや、アカウントロック状態に応じたリダイレクト先の振り分けを行います。
+ * 
+ * @author 陳以勒
+ */
 @Component
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-
+    /** ログイン試行回数およびブロック状態を管理するサービス */
     private final EmployeeLoginAttemptService loginAttemptService;
 
+    /**
+     * コンストラクタ。
+     * 
+     * @param employeeLoginAttemptService ログイン試行管理サービス
+     */
     public CustomAuthenticationFailureHandler(EmployeeLoginAttemptService employeeLoginAttemptService) {
         this.loginAttemptService = employeeLoginAttemptService;
         setDefaultFailureUrl("/login?error=true");
     }
 
+    /**
+     * 認証が失敗した際に呼び出されるメソッドです。
+     * 失敗回数の記録や、アカウントがロックされているかどうかの判定を行い、適切なエラーページへリダイレクトします。
+     * 
+     * @param request   HTTPサーブレットリクエスト
+     * @param response  HTTPサーブレットレスポンス
+     * @param exception 発生した認証例外
+     * @throws IOException      入出力例外
+     * @throws ServletException サーブレット例外
+     */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
@@ -36,8 +56,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             loginAttemptService.loginFailed(username);
         }
 
-        //
-        // 2. ユーザーが現在ブロック（ロック）されている状態かどうかをサービス層で直接確認する！
+        // ユーザーが現在ブロック（ロック）されている状態かどうかをサービス層で直接確認する
         boolean isLocked = false;
         if (username != null && !username.isBlank()) {
             isLocked = loginAttemptService.isBlocked(username);
@@ -55,7 +74,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 cause = cause.getCause();
             }
         }
-        // 3. 判定結果に応じてリダイレクト先を分ける
+        // 判定結果に応じてリダイレクト先を分ける
         if (isLocked) {
             response.sendRedirect(request.getContextPath() + "/admin/login?locked");
         } else {

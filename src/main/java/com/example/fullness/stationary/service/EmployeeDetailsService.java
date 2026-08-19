@@ -14,6 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.fullness.stationary.entity.EmployeeAccount;
 import com.example.fullness.stationary.repository.EmployeeAccountRepository;
 
+/**
+ * Spring Securityの認証処理において、データベースから社員アカウント情報をロードするサービスです。
+ * ログイン試行制限のブロック状態の確認や、アカウント情報に基づくUserDetailsの構築を行います。
+ * 
+ * @author 陳以勒
+ */
 @Service
 @Transactional(readOnly = true)
 public class EmployeeDetailsService implements UserDetailsService {
@@ -23,6 +29,15 @@ public class EmployeeDetailsService implements UserDetailsService {
     @Autowired
     private EmployeeLoginAttemptService employeeLoginAttemptService;
 
+    /**
+     * アカウント名をキーにしてユーザー詳細情報をロードします。
+     * ログイン試行がブロックされていないか確認した後、データベースからアカウントを検索し、認証用のUserDetailsオブジェクトを返却します。
+     * 
+     * @param name アカウント名
+     * @return 社員の詳細情報オブジェクト（EmployeeDetails）
+     * @throws UsernameNotFoundException ユーザーがデータベースに見つからない場合
+     * @throws LockedException           アカウントがロック（ブロック）されている場合
+     */
     @Override
     public EmployeeDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         // 1. メモリ上でロックされているかチェック
@@ -39,6 +54,12 @@ public class EmployeeDetailsService implements UserDetailsService {
         return new EmployeeDetails(employeeAccount, authorities);
     }
 
+    /**
+     * 社員アカウントに付与する権限（ロール）のコレクションを取得します。
+     * 
+     * @param employeeAccount 社員アカウントエンティティ
+     * @return 権限のコレクション
+     */
     private Collection<GrantedAuthority> getAuthorities(EmployeeAccount employeeAccount) {
 
         return AuthorityUtils.createAuthorityList("ROLE_EMPLOYEE");
