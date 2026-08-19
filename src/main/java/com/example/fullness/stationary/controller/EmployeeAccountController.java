@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.fullness.stationary.controller.form.EmployeeRegisterForm;
 import com.example.fullness.stationary.service.EmployeeRegisterService;
@@ -23,13 +24,25 @@ public class EmployeeAccountController {
     public String showRegisterForm(Model model) {
         model.addAttribute("employeeRegisterForm", new EmployeeRegisterForm());
         model.addAttribute("unRegisteredEmployeeList", employeeRegisterService.getUnregisteredEmployeeList());
-        return "admin/account/register";
+        return "admin/account/form";
     }
 
-    // 登録処理の実行
     @PostMapping("/form")
-    public String register(@ModelAttribute EmployeeRegisterForm employeeRegisterForm) {
+    public String confirm(@ModelAttribute EmployeeRegisterForm employeeRegisterForm) {
+        return "employee/account/confirm";
+    }
+
+    // 3. 処理実行して完了画面へ
+    @PostMapping("/confirm")
+    public String complete(@ModelAttribute EmployeeRegisterForm employeeRegisterForm, SessionStatus sessionStatus) {
         employeeRegisterService.registerAccount(employeeRegisterForm);
-        return "redirect:/employee/account/register?success";
+        sessionStatus.setComplete(); // セッションを破棄
+        return "redirect:/admin/account/complete";
+    }
+
+    // 4. 完了画面
+    @GetMapping("/complete")
+    public String showComplete() {
+        return "admin/account/complete";
     }
 }
