@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.fullness.stationary.controller.form.EmployeeRegisterForm;
 import com.example.fullness.stationary.entity.Employee;
 import com.example.fullness.stationary.repository.EmployeeAccountRepository;
+import com.example.fullness.stationary.repository.EmployeeRepository;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class EmployeeRegisterService {
 
     @Autowired
     private EmployeeAccountRepository employeeAccountRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     // @Autowired(required = false)
     // private PasswordEncoder passwordEncoder;
@@ -25,6 +28,11 @@ public class EmployeeRegisterService {
         return employeeAccountRepository.selectUnregisteredEmployees();
     }
 
+    public Employee selectByEmpId(Integer empId) {
+        return employeeRepository.findByEmpId(empId);
+
+    }
+
     // アカウントの登録処理
     @Transactional
     public void registerAccount(EmployeeRegisterForm employeeRegisterForm) {
@@ -32,7 +40,6 @@ public class EmployeeRegisterService {
         // if (passwordEncoder != null) {
         // form.setPassword(passwordEncoder.encode(form.getPassword()));
         // }
-
         employeeAccountRepository.insertAccount(employeeRegisterForm);
     }
 }
