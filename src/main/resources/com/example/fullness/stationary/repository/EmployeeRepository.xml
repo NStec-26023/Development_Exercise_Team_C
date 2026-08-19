@@ -10,3 +10,4 @@
         WHERE emp_id = #{empId}
         ]]>
     </select>
+</mapper>

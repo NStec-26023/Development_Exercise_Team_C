@@ -29,25 +29,35 @@ public class EmployeeAccountController {
 
     // 登録画面の表示
     @GetMapping("/form")
-    public String showRegisterForm(Model model) {
+    public String showRegisterForm(@ModelAttribute("form") EmployeeRegisterForm form, Model model) {
         model.addAttribute("employees", employeeRegisterService.getUnregisteredEmployeeList());
         return "admin/account/form";
     }
 
     @PostMapping("/form")
-    public String confirm(@ModelAttribute EmployeeRegisterForm employeeRegisterForm) {
-        System.out.println("DEBUG: 社員ID = " + employeeRegisterForm.getEmpId());
-        System.out.println("DEBUG: アカウント名 = " + employeeRegisterForm.getAccountName());
-        Employee employee = employeeRegisterService.findById(employeeRegisterForm.getEmpId());
-        employeeRegisterForm.setEmpName(employee.getName()); // ← ここで名前をセットする！
+    public String confirm(@ModelAttribute("form") EmployeeRegisterForm form) {
+
+        System.out.println("DEBUG: 社員ID = " + form.getEmpId());
+        System.out.println("DEBUG: 社員名 = " + form.getEmpName());
+        System.out.println("DEBUG: アカウント名 = " + form.getAccountName());
+        // Employee employee = employeeRegisterService.selectByEmpId(form.getEmpId());
+        // form.setEmpName(employee.getName());
+        // 1. 社員IDから名前を検索
+        if (form.getEmpId() != null) {
+            Employee employee = employeeRegisterService.selectByEmpId(form.getEmpId());
+            if (employee != null) {
+                // 名前をセット（これがセッションのformに反映される）
+                form.setEmpName(employee.getName());
+            }
+        }
         return "admin/account/confirm";
     }
 
     // 3. 処理実行して完了画面へ
     @PostMapping("/confirm")
-    public String complete(@ModelAttribute EmployeeRegisterForm employeeRegisterForm, SessionStatus sessionStatus) {
-        employeeRegisterService.registerAccount(employeeRegisterForm);
-        sessionStatus.setComplete(); // セッションを破棄
+    public String complete(@ModelAttribute("form") EmployeeRegisterForm form, SessionStatus sessionStatus) {
+        employeeRegisterService.registerAccount(form);
+        sessionStatus.setComplete(); // セッション破棄
         return "redirect:/admin/account/complete";
     }
 
