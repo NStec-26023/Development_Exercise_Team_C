@@ -27,7 +27,7 @@ public class EmployeeAccountController {
     }
 
     // 登録処理の実行
-    @PostMapping("/register")
+    @PostMapping("/form")
     public String register(@ModelAttribute EmployeeRegisterForm employeeRegisterForm) {
         employeeRegisterService.registerAccount(employeeRegisterForm);
         return "redirect:/employee/account/register?success";
