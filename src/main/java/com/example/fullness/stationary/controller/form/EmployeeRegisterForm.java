@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class EmployeeRegisterForm {
-    private String employeeName; // 選択された社員名（外部キー）
-    private String name; // 入力されたアカウント名
+    private Integer empId; // 選択された社員の社員ID
+    private String empName; // 選択された社員名
+    private String accountName; // 入力されたアカウント名
     private String password; // 入力されたパスワード
 }

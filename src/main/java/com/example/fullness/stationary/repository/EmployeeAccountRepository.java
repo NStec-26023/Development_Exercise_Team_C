@@ -36,5 +36,5 @@ public interface EmployeeAccountRepository {
      * 
      * @param employeeAccount 登録する社員アカウント情報
      */
-    void insertAccount(EmployeeRegisterForm employeeRegisterForm);
+    void insertAccount(EmployeeRegisterForm employeeRegisterForm);// 8/19
 }
