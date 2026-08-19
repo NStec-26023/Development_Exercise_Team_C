@@ -30,25 +30,40 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
+/**
+ * Spring Securityを用いたWebアプリケーションのセキュリティ設定クラスです。
+ * 担当者（管理者）向けのセキュリティフィルターチェーンや、パスワードエンコーダーの設定を行います。
+ * 
+ * @author 陳以勒
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+        /** 認証失敗時のカスタムハンドラ */
         private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+        /** 認証成功時のカスタムハンドラ */
         private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
+        /**
+         * コンストラクタインジェクションにより、認証成功・失敗のカスタムハンドラを設定します。
+         * 
+         * @param customAuthenticationFailureHandler 認証失敗ハンドラ
+         * @param customAuthenticationSuccessHandler 認証成功ハンドラ
+         */
         public SecurityConfig(CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
                         CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
                 this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
                 this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
         }
 
-        // @Autowired
-        // EmployeeDetailsService employeeDetailsService;
-        // @Autowired
-        // CustomerDetailsService customerDetailsService;
-
-        // 担当者ログイン・ログアウト
+        /**
+         * 担当者（管理者）向けのセキュリティフィルターチェーンを設定します。
+         * 対象URLやログイン・ログアウトの挙動を定義します。
+         * 
+         * @param http HttpSecurityオブジェクト
+         * @return 設定済みのSecurityFilterChain
+         * @throws Exception 設定時に発生する例外
+         */
         @Bean
         @Order(1)
         public SecurityFilterChain employeeSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -77,61 +92,20 @@ public class SecurityConfig {
                                                 .logoutUrl("/admin/logout") // ログアウトを実行するURL
                                                 .logoutSuccessUrl("/admin") // ログアウト成功後の遷移先
                                                 .invalidateHttpSession(true)
+
                                                 .deleteCookies("JSESSIONID")
                                                 .clearAuthentication(true));
 
                 return http.build();
         }
 
-        // 顧客ログイン、
-        // ログアウト
-        // @Bean
-        // @Order(2)
-        // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
-        // Exception {
-        // // DaoAuthenticationProvider customerProvider = new
-        // DaoAuthenticationProvider();
-        // // customerProvider.setUserDetailsService(customerDetailsService);
-        // // customerProvider.setPasswordEncoder(passwordEncoder());
-        // http
-        // // 1. アクセス権限（認可）の設定
-        // .authorizeHttpRequests(auth -> auth
-        // .requestMatchers("/").permitAll()
-        // // 【例1】特定のページや管理画面だけ認証を必須にする
-        // .requestMatchers("/purchase/confirm").authenticated()
-        // // 【例2】上記以外のすべてのリクエストはデフォルトでアクセスを許可する
-        // .anyRequest().permitAll())
-
-        // // 2. ログイン設定
-        // .formLogin(form -> form
-        // .loginPage("/login") // ログイン画面のURL
-        // .loginProcessingUrl("/login") // フォームの処理先
-        // .usernameParameter("mailAddress")
-        // .passwordParameter("password")
-        // .defaultSuccessUrl("/", true) // ログイン成功後は常にトップ画面("/")へリダイレクト
-        // .failureUrl("/login")
-        // .permitAll())
-
-        // // 3. ログアウト設定
-        // .logout(logout -> logout
-        // .logoutUrl("/logout") // ログアウトを実行するURL
-        // .logoutSuccessUrl("/") // ログアウト成功後はトップ画面("/")へリダイレクト
-        // .invalidateHttpSession(true)
-        // .deleteCookies("JSESSIONID")
-        // .clearAuthentication(true));
-        // return http.build();
-        // }
-
-        // パスワードをハッシュ化するためのエンコーダー（BCrypt）
+        /**
+         * パスワードをハッシュ化するためのBCryptエンコーダーのBeanを定義します。
+         * 
+         * @return BCryptPasswordEncoderインスタンス
+         */
         @Bean
         public BCryptPasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();
         }
-
-        // @Bean
-        // public AuthenticationManager
-        // authenticationManager(AuthenticationConfiguration configuration) throws
-        // Exception {
-        // return configuration.getAuthenticationManager();
-        // }
 }

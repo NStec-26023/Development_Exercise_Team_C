@@ -7,14 +7,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+/**
+ * 社員アカウント情報を保持するエンティティクラスです。
+ * 
+ * @author 陳以勒
+ */
 @Data
 public class EmployeeAccount implements Serializable {
-
-    private Integer accId; // アカウントID
-
+    /** アカウントID */
+    private Integer accId;
+    /** 社員ID */
     private Integer empId;
+    /** アカウント名 */
     @NotBlank
-    private String name;// アカウント名、社員名ではない
+    private String name;
+    /** パスワード */
     @NotBlank
     private String password;
 
