@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -16,8 +17,8 @@
         <ul class="alert alert-danger" th:if="${errorMessages}">
             <li th:each="msg : ${errorMessages}" th:text="${msg}"></li>
         </ul>
-
-        <form th:action="@{/admin/product/edit/{id}(id=${form.proId})}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/admin/product/edit/{id}(id=${form.proId})}" th:object="${form}" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:field="*{imageUrl}">
             <div class="mb-3 row">
                 <label class="col-sm-4 col-form-label">商品名</label>
                 <div class="col-sm-8">
@@ -54,16 +55,16 @@
                 </div>
             </div>
             <div class="text-center mb-3">
-                <img th:src="@{${form.imageUrl}}" th:alt="${form.name}" class="img-fluid" style="max-height: 160px;">
+                <img th:src="@{'/images/' +${form.imageUrl}}" th:alt="${form.name}" class="img-fluid" style="max-height: 160px;">
             </div>
             <div class="text-center mt-4">
                 <a th:href="@{/admin/product}" class="btn btn-link link-fs">キャンセル</a>
                 <button type="submit" class="btn btn-fs-solid px-4">完了</button>
             </div>
-        </form>
+        </form> 
     </div>
 </main>
 
 <div th:replace="~{admin/fragments/layout :: footer}"></div>
 </body>
-</html>
+</html> 

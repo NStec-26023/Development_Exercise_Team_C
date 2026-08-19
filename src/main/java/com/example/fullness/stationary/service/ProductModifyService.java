@@ -30,12 +30,17 @@ public class ProductModifyService {
         return productModifyRepository.selectCatNameByCatId(catId);
     }
 
-    public void updateProductStock(ProductStock productStock) {
+    public void updateProductAndStock(Product product, ProductStock productStock) {
+        productModifyRepository.updateProduct(product);
         productModifyRepository.updateProductStock(productStock);
     }
 
-    public void updateProduct(Product product) {
-        productModifyRepository.updateProduct(product);
-    }
+    // public void updateProductStock(ProductStock productStock) {
+    //     productModifyRepository.updateProductStock(productStock);
+    // }
+
+    // public void updateProduct(Product product) {
+    //     productModifyRepository.updateProduct(product);
+    // }
 
 }
