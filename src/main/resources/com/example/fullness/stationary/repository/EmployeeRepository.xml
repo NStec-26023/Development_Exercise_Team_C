@@ -5,7 +5,7 @@
 
 <mapper namespace="com.example.fullness.stationary.repository.EmployeeRepository">
 	<!-- 未登録の社員取得 -->
-    <select id="selectUnregisteredEmployeesl" resultType="com.example.fullness.stationary.entity">
+    <select id="selectUnregisteredEmployeesl" resultType="com.example.fullness.stationary.entity.Employee">
         <!-- データベースコラムまだ更新してないから変えてね↓ -->
          <![CDATA[
         SELECT emp_id
