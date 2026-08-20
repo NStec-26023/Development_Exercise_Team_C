@@ -1,9 +1,10 @@
 package com.example.fullness.stationary.entity;
 
+import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class Product {
+public class Product implements Serializable {
     private Integer proId; // 商品ID
     private String name; // 商品名
     private Integer price; // 価格
