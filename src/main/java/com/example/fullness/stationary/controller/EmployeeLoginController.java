@@ -80,18 +80,15 @@ public class EmployeeLoginController {
             RedirectAttributes redirectAttributes, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        // 入力チェック
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
             bindingResult.getAllErrors().forEach(e -> errorMessages.add(e.getDefaultMessage()));
             redirectAttributes.addFlashAttribute("errorMessage", String.join(" ", errorMessages));
             redirectAttributes.addFlashAttribute("form", employeeLoginForm);
 
-            // ログイン画面にリダイレクト
             return "redirect:/admin/login";
         }
 
-        // バリデーション通過 → Spring Security認証エンドポイントにフォワード
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/login-process");
         dispatcher.forward(request, response);
         return null;

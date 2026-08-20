@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
- * 社員アカウント情報を保持するエンティティクラスです。
+ * 社員アカウント（担当者）情報を保持するエンティティクラスです。
  * 
  * @author 陳以勒
  */

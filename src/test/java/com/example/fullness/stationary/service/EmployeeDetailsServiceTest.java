@@ -47,7 +47,7 @@ class EmployeeDetailsServiceTest {
         EmployeeDetails employeeDetails = (EmployeeDetails) employeeDetailsService.loadUserByUsername(accountName);
 
         assertNotNull(employeeDetails, "EmployeeDetailsが返却された");
-        assertEquals(accountName, employeeDetails.getUsername(), "ユーザー名が一致している");
+        assertEquals(accountName, employeeDetails.getUsername(), "アカウント名が一致している");
         assertEquals("encodedPassword", employeeDetails.getPassword(), "パスワードが一致している");
     }
 }
