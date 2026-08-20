@@ -23,17 +23,4 @@ public interface EmployeeAccountRepository {
      */
     EmployeeAccount findByName(String name);
 
-    /**
-     * アカウントが未登録の社員一覧を抽出します。
-     * 
-     * @return 未登録の社員情報のリスト
-     */
-    List<Employee> selectUnregisteredEmployees();
-
-    /**
-     * 新しい社員アカウント情報をデータベースに登録します。
-     * 
-     * @param employeeAccount 登録する社員アカウント情報
-     */
-    void insertAccount(EmployeeAccount employeeAccount);
 }

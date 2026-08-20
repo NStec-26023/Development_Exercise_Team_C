@@ -11,23 +11,4 @@
         ]]>
     </select>
 
-<!-- 未登録の社員を抽出する -->
-    <select id="selectUnregisteredEmployees" resultType="com.example.fullness.stationary.entity.Employee">
-        <![CDATA[
-        SELECT e.emp_id, e.name
-        FROM employee e 
-        LEFT JOIN employee_account ea ON e.name = ea.name 
-        WHERE ea.emp_id IS NULL
-        ]]>
-    </select>
-
-<!-- アカウントデータを挿入するクエリ -->
-    <insert id="insertAccount" parameterType="com.example.fullness.stationary.entity.EmployeeAccount">
-        <![CDATA[
-        INSERT INTO employee_account (acc_id, name, password, emp_id) 
-        VALUES ( #001から自動採番, #{name}, #{password}, #{empId})
-        ]]>
-    </insert>
-
-
 </mapper>

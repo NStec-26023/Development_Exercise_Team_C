@@ -14,20 +14,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmployeeLoginAttemptService {
 
-    /** ユーザーごとのログイン失敗回数を保持するキャッシュ */
+    /** アカウントごとのログイン失敗回数を保持するキャッシュ */
     private final ConcurrentHashMap<String, Integer> attemptsCashe = new ConcurrentHashMap<>();
     /** アカウントロックとなる最大失敗回数 */
     private static final int MAX_ATTEMPTS = 5;
-    /** ユーザーごとの最後のログイン失敗時刻を保持するキャッシュ */
+    /** アカウントごとの最後のログイン失敗時刻を保持するキャッシュ */
     private final ConcurrentHashMap<String, LocalDateTime> lastAttemptCache = new ConcurrentHashMap<>();
     /** アカウントのロック時間（分） */
     private static final int LOCK_TIME_MINUTES = 10;
 
     /**
-     * 失敗試行を記録します（現在未使用、または補助用）。
+     * 失敗試行を記録します（書き込み用）。
      * 
      * @param employeeAcount 社員アカウント名
-     * @deprecated 代わりに {@link #loginFailed(String)} を使用してください。
      */
     public void recordFailedAttempt(String employeeAcount) {
         int attempts = attemptsCashe.getOrDefault(employeeAcount, 0);
@@ -38,7 +37,7 @@ public class EmployeeLoginAttemptService {
      * ログイン失敗時の処理を行います。
      * 失敗回数をインクリメントし、失敗時刻を記録します。
      * 
-     * @param username アカウント名（ユーザー名）
+     * @param username アカウント名
      */
     public void loginFailed(String username) {
         int attempts = attemptsCashe.getOrDefault(username, 0);
@@ -80,5 +79,12 @@ public class EmployeeLoginAttemptService {
         }
 
         return true;
+    }
+
+    /**
+     * 指定されたアカウントの現在の失敗回数を取得する（テスト用、または画面表示用）
+     */
+    public int getFailedAttempts(String username) {
+        return attemptsCashe.getOrDefault(username, 0);
     }
 }

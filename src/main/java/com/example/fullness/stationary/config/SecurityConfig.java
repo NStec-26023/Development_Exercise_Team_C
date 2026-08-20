@@ -19,9 +19,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.fullness.stationary.handler.CustomAuthenticationFailureHandler;
+import com.example.fullness.stationary.handler.CustomAuthenticationSuccessHandler;
 import com.example.fullness.stationary.repository.EmployeeAccountRepository;
-import com.example.fullness.stationary.service.CustomAuthenticationFailureHandler;
-import com.example.fullness.stationary.service.CustomAuthenticationSuccessHandler;
 // import com.example.fullness.stationary.service.CustomerDetailsService;
 import com.example.fullness.stationary.service.EmployeeDetailsService;
 
@@ -32,7 +32,7 @@ import jakarta.validation.Valid;
 
 /**
  * Spring Securityを用いたWebアプリケーションのセキュリティ設定クラスです。
- * 担当者（管理者）向けのセキュリティフィルターチェーンや、パスワードエンコーダーの設定を行います。
+ * 担当者向けのセキュリティフィルターチェーンや、パスワードエンコーダーの設定を行います。
  * 
  * @author 陳以勒
  */
