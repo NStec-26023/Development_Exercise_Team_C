@@ -15,10 +15,10 @@
     <select id="selectUnregisteredEmployees" resultType="com.example.fullness.stationary.entity.Employee">
         <![CDATA[
       SELECT 
-            e.emp_id, 
+        e.emp_id AS empId,
             e.name, 
             e.kana, 
-            e.dept_id 
+        e.dept_id AS deptId
         FROM 
             employee e
         LEFT JOIN 
@@ -37,7 +37,7 @@
             password, 
             emp_id
         )VALUES( 
-            #{name}, 
+            #{accountName}, 
             #{password},
             #{empId}
         )
