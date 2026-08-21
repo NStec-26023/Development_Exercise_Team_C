@@ -7,7 +7,7 @@
     <select id="findByName" resultType="com.example.fullness.stationary.entity.EmployeeAccount">
          <![CDATA[
         SELECT * FROM employee_account
-        WHERE name = #{name}
+        WHERE "name" = #{name}
         ]]>
     </select>
 
@@ -29,14 +29,22 @@
     </select>
 
 <!-- アカウントデータを挿入するクエリ -->
+
     <insert id="insertAccount" parameterType="com.example.fullness.stationary.controller.form.EmployeeRegisterForm">
+         <selectKey keyProperty="accId" resultType="int" order="BEFORE">
         <![CDATA[
+        SELECT nextval('seq_accno') as accId
+        ]]>
+    </selectKey>
+     <![CDATA[
        
         INSERT INTO employee_account (
-            name, 
+            acc_id,
+            "name", 
             password, 
             emp_id
         )VALUES( 
+            nextval('seq_accno'),
             #{accountName}, 
             #{password},
             #{empId}

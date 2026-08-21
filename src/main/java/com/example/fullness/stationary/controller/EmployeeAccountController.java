@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.fullness.stationary.controller.form.EmployeeRegisterForm;
 import com.example.fullness.stationary.entity.Employee;
@@ -37,16 +39,15 @@ public class EmployeeAccountController {
     @PostMapping("/form")
     public String confirm(@ModelAttribute("form") EmployeeRegisterForm form) {
 
-        System.out.println("DEBUG: 社員ID = " + form.getEmpId());
-        System.out.println("DEBUG: 社員名 = " + form.getEmpName());
-        System.out.println("DEBUG: アカウント名 = " + form.getAccountName());
-        // Employee employee = employeeRegisterService.selectByEmpId(form.getEmpId());
-        // form.setEmpName(employee.getName());
+        // System.out.println("DEBUG: 社員ID = " + form.getEmpId());
+        // System.out.println("DEBUG: 社員名 = " + form.getEmpName());
+        // System.out.println("DEBUG: アカウント名 = " + form.getAccountName());
+
         // 1. 社員IDから名前を検索
         if (form.getEmpId() != null) {
             Employee employee = employeeRegisterService.selectByEmpId(form.getEmpId());
             if (employee != null) {
-                // 名前をセット（これがセッションのformに反映される）
+                // 名前をセット（セッションのformに反映される）
                 form.setEmpName(employee.getName());
             }
         }
@@ -55,10 +56,30 @@ public class EmployeeAccountController {
 
     // 3. 処理実行して完了画面へ
     @PostMapping("/confirm")
-    public String complete(@ModelAttribute("form") EmployeeRegisterForm form, SessionStatus sessionStatus) {
-        employeeRegisterService.registerAccount(form);
-        sessionStatus.setComplete(); // セッション破棄
-        return "redirect:/admin/account/complete";
+    public String handleComfirm(@ModelAttribute("form") EmployeeRegisterForm form,
+            @RequestParam(value = "action", required = false) String action, // action パラメータを取得
+            Model model, SessionStatus sessionStatus, RedirectAttributes redirectAttributes) {
+
+        if ("back".equals(action)) {
+            // 戻るボタンの処理
+            model.addAttribute("employees", employeeRegisterService.getUnregisteredEmployeeList());
+            return "admin/account/form";
+        }
+
+        if ("register".equals(action)) {
+            // 登録ボタンの処理
+            employeeRegisterService.registerAccount(form);
+
+            redirectAttributes.addFlashAttribute("registeredEmpName", form.getEmpName());
+            redirectAttributes.addFlashAttribute("registeredAccountName", form.getAccountName());
+
+            sessionStatus.setComplete();
+            return "redirect:/admin/account/complete";
+
+        }
+
+        return "admin/account/confirm";
+
     }
 
     // 4. 完了画面
