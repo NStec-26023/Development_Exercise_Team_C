@@ -1,5 +1,7 @@
 package com.example.fullness.stationary.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -17,9 +19,13 @@ public class EmployeeAccountRepositoryTest {
     @Test
     // アカウント名で正しいアカウント名とパスワードが取得されること
     public void testFindByName() {
-        EmployeeAccount employeeAccount = employeeAccountRepository.findByName("dog1234");
-        Assertions.assertEquals(employeeAccount.getName(), "dog1234");
-        Assertions.assertEquals(employeeAccount.getPassword(),
-                "$2a$12$JKzJsvhJFrDlxaB8mSY.EeaTThHGrF0uwZuNoNr6EhMrvgoyXit3e");
+
+        EmployeeAccount employeeAccountExpected = new EmployeeAccount();
+        employeeAccountExpected.setAccId(2);
+        employeeAccountExpected.setName("dog1234");
+        employeeAccountExpected.setPassword("$2a$12$JKzJsvhJFrDlxaB8mSY.EeaTThHGrF0uwZuNoNr6EhMrvgoyXit3e");
+        employeeAccountExpected.setEmpId(1003);
+        EmployeeAccount employeeAccountActual = employeeAccountRepository.findByName("dog1234");
+        assertEquals(employeeAccountExpected, employeeAccountActual);
     }
 }

@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 /**
- * 社員のログイン試行回数およびアカウントロック状態を管理するサービスです。
+ * 担当者ログイン試行回数およびアカウントロック状態を管理するサービスです。
  * 一定回数以上のログイン失敗を検知し、一定時間アカウントをロックする機能を提供します。
  * 
  * @author 陳以勒
@@ -24,25 +24,14 @@ public class EmployeeLoginAttemptService {
     private static final int LOCK_TIME_MINUTES = 10;
 
     /**
-     * 失敗試行を記録します（書き込み用）。
-     * 
-     * @param employeeAcount 社員アカウント名
-     */
-    public void recordFailedAttempt(String employeeAcount) {
-        int attempts = attemptsCashe.getOrDefault(employeeAcount, 0);
-        attemptsCashe.put(employeeAcount, attempts + 1);
-    }
-
-    /**
      * ログイン失敗時の処理を行います。
-     * 失敗回数をインクリメントし、失敗時刻を記録します。
+     * 失敗回数、失敗時刻を記録します。
      * 
      * @param username アカウント名
      */
     public void loginFailed(String username) {
         int attempts = attemptsCashe.getOrDefault(username, 0);
-        attempts++;
-        attemptsCashe.put(username, attempts);
+        attemptsCashe.put(username, attempts + 1);
         System.out.println("ログイン失敗: " + username + " (失敗回数: " + attempts + ")");
         lastAttemptCache.put(username, LocalDateTime.now());
     }
@@ -82,7 +71,7 @@ public class EmployeeLoginAttemptService {
     }
 
     /**
-     * 指定されたアカウントの現在の失敗回数を取得する（テスト用、または画面表示用）
+     * 指定されたアカウントの現在の失敗回数を取得する（テスト用、画面表示用）
      */
     public int getFailedAttempts(String username) {
         return attemptsCashe.getOrDefault(username, 0);

@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -34,22 +36,46 @@ class EmployeeDetailsServiceTest {
     private EmployeeDetailsService employeeDetailsService;
 
     @Test
-    // アカウント名からEmployeeDetailsを正しく取得
     void testLoadUserByUsernameSuccess() {
 
-        String accountName = "testuser";
-        EmployeeAccount employeeAccount = new EmployeeAccount();
-        employeeAccount.setName(accountName);
-        employeeAccount.setPassword("encodedPassword");
+        String accountName = "dog1234";
+        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_EMPLOYEE");
+
+        EmployeeAccount employeeAccountExpected = new EmployeeAccount();
+        employeeAccountExpected.setAccId(2);
+        employeeAccountExpected.setName(accountName);
+        employeeAccountExpected.setPassword("$2a$12$JKzJsvhJFrDlxaB8mSY.EeaTThHGrF0uwZuNoNr6EhMrvgoyXit3e");
+        employeeAccountExpected.setEmpId(1003);
+        EmployeeDetails employeeDetailsExpected = new EmployeeDetails(employeeAccountExpected, authorities);
         when(employeeLoginAttemptService.isBlocked(accountName)).thenReturn(false);
-        when(employeeAccountRepository.findByName(accountName)).thenReturn(employeeAccount);
+        when(employeeAccountRepository.findByName(accountName)).thenReturn(employeeAccountExpected);
+        EmployeeDetails employeeDetailsActual = employeeDetailsService.loadUserByUsername("dog1234");
 
-        EmployeeDetails employeeDetails = (EmployeeDetails) employeeDetailsService.loadUserByUsername(accountName);
+        assertThat(employeeDetailsActual)
+                .usingRecursiveComparison()
+                .isEqualTo(employeeDetailsExpected);
 
-        assertNotNull(employeeDetails, "EmployeeDetailsが返却された");
-        assertEquals(accountName, employeeDetails.getUsername(), "アカウント名が一致している");
-        assertEquals("encodedPassword", employeeDetails.getPassword(), "パスワードが一致している");
+        assertEquals(employeeDetailsExpected.getAuthorities(), employeeDetailsActual.getAuthorities());
     }
+    // @Test
+    // アカウント名からEmployeeDetailsを正しく取得
+    // void testLoadUserByUsernameSuccess() {
+
+    // String accountName = "testuser";
+    // EmployeeAccount employeeAccount = new EmployeeAccount();
+    // employeeAccount.setName(accountName);
+    // employeeAccount.setPassword("encodedPassword");
+    // when(employeeLoginAttemptService.isBlocked(accountName)).thenReturn(false);
+    // when(employeeAccountRepository.findByName(accountName)).thenReturn(employeeAccount);
+
+    // EmployeeDetails employeeDetails = (EmployeeDetails)
+    // employeeDetailsService.loadUserByUsername(accountName);
+
+    // assertNotNull(employeeDetails, "EmployeeDetailsが返却された");
+    // assertEquals(accountName, employeeDetails.getUsername(), "アカウント名が一致している");
+    // assertEquals("encodedPassword", employeeDetails.getPassword(),
+    // "パスワードが一致している");
+    // }
 }
 
 // @Test
