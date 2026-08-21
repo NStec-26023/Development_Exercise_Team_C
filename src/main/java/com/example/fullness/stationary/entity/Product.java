@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+//商品
+
 @Data
-public class Product implements Serializable{
+public class Product implements Serializable {
 
     private Integer proId;
     private String name;

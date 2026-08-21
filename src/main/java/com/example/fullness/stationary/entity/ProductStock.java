@@ -5,8 +5,10 @@ import java.util.List;
 
 import lombok.Data;
 
+//商品在庫
+
 @Data
-public class ProductStock implements Serializable{
+public class ProductStock implements Serializable {
 
     private Integer stoId;
     private Integer quantity;

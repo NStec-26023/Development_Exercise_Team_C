@@ -11,22 +11,24 @@ import com.example.fullness.stationary.entity.ProductCategory;
 import com.example.fullness.stationary.entity.ProductStock;
 import com.example.fullness.stationary.repository.ProductModifyRepository;
 
+//商品修正サービスクラス
+
 @Service
 @Transactional
 public class ProductModifyService {
 
     @Autowired
     private ProductModifyRepository productModifyRepository;
-    
-    public List<ProductCategory> findAllProductCategory(){
+
+    public List<ProductCategory> findAllProductCategory() {
         return productModifyRepository.selectAllProductCategory();
     }
 
-    public ProductStock findByProIdWithProduct(Integer proId){
+    public ProductStock findByProIdWithProduct(Integer proId) {
         return productModifyRepository.selectByProIdWithProduct(proId);
     }
 
-    public String findCatNameByCatId(Integer catId){
+    public String findCatNameByCatId(Integer catId) {
         return productModifyRepository.selectCatNameByCatId(catId);
     }
 
@@ -34,13 +36,5 @@ public class ProductModifyService {
         productModifyRepository.updateProduct(product);
         productModifyRepository.updateProductStock(productStock);
     }
-
-    // public void updateProductStock(ProductStock productStock) {
-    //     productModifyRepository.updateProductStock(productStock);
-    // }
-
-    // public void updateProduct(Product product) {
-    //     productModifyRepository.updateProduct(product);
-    // }
 
 }

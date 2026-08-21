@@ -8,7 +8,7 @@ import com.example.fullness.stationary.entity.Product;
 import com.example.fullness.stationary.entity.ProductCategory;
 import com.example.fullness.stationary.entity.ProductStock;
 
-
+//商品修正レポジトリ
 
 @Mapper
 public interface ProductModifyRepository {
@@ -21,6 +21,6 @@ public interface ProductModifyRepository {
 
     Integer updateProductStock(ProductStock productStock);
 
-    Integer updateProduct(Product product); 
+    Integer updateProduct(Product product);
 
 }

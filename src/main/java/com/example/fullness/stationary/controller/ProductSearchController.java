@@ -17,13 +17,13 @@ import com.example.fullness.stationary.entity.Product;
 import com.example.fullness.stationary.entity.ProductCategory;
 import com.example.fullness.stationary.service.ProductSearchService;
 
+//商品検索コントローラークラス
 
 @Controller
 @RequestMapping("admin/product")
 public class ProductSearchController {
     @Autowired
-    private ProductSearchService productSearchService; 
-
+    private ProductSearchService productSearchService;
 
     @GetMapping
     public String searchProducts(
@@ -31,23 +31,13 @@ public class ProductSearchController {
             @RequestParam(name = "page", defaultValue = "1") int page,
             Model model) {
 
-            List<ProductCategory> categories = productSearchService.findAllProductCategory();
-            model.addAttribute("categories", categories);
-            model.addAttribute("selectedCategoryId", catId);
+        List<ProductCategory> categories = productSearchService.findAllProductCategory();
+        model.addAttribute("categories", categories);
+        model.addAttribute("selectedCategoryId", catId);
 
+        List<Product> products = productSearchService.findByCategory(catId);
+        model.addAttribute("products", products);
 
-            List<Product> products = productSearchService.findByCategory(catId);
-            model.addAttribute("products", products);
-
-            // List<Product> products = productSearchService.findByCategoryAndPage(catId, page);
-            // int totalPages = productSearchService.getTotalPages(catId); 
-        
-            // model.addAttribute("products", products);       
-            // model.addAttribute("currentPage", page);         
-            // model.addAttribute("totalPages", totalPages);   
-
-            return "admin/product/search"; 
-        }
+        return "admin/product/search";
     }
-
-    
+}

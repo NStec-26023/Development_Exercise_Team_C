@@ -24,6 +24,8 @@ import com.example.fullness.stationary.entity.ProductCategory;
 import com.example.fullness.stationary.entity.ProductStock;
 import com.example.fullness.stationary.service.ProductModifyService;
 
+//商品修正コントローラークラス
+
 @Controller
 @RequestMapping("/admin/product")
 @SessionAttributes("form")
@@ -32,19 +34,18 @@ public class ProductModifyController {
     @Autowired
     private ProductModifyService productModifyService;
 
-
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model) {
         List<ProductCategory> categories = productModifyService.findAllProductCategory();
         model.addAttribute("categories", categories);
 
         ProductStock productStock = productModifyService.findByProIdWithProduct(id);
-        
+
         ProductModifyForm form = new ProductModifyForm();
         if (productStock != null) {
             form.setProId(productStock.getProId());
             form.setStock(productStock.getQuantity());
-            
+
             if (productStock.getProducts() != null && !productStock.getProducts().isEmpty()) {
                 Product product = productStock.getProducts().get(0);
                 form.setName(product.getName());
@@ -55,31 +56,25 @@ public class ProductModifyController {
         }
 
         model.addAttribute("form", form);
-        return "admin/product/edit_form"; 
+        return "admin/product/edit_form";
     }
 
     @PostMapping("/edit/{id}")
     public String confirmUpdate(
             @Validated @ModelAttribute("form") ProductModifyForm form,
             BindingResult bindingResult,
-            @RequestParam(value = "image", required = false) MultipartFile imageFile, 
-            Model model){
-
-        // if (bindingResult.hasErrors()) {
-        //     model.addAttribute("categories", productModifyService.findAllProductCategory());
-        //     return "admin/product/edit_form";
-        // }
+            @RequestParam(value = "image", required = false) MultipartFile imageFile,
+            Model model) {
 
         String catName = productModifyService.findCatNameByCatId(form.getCatId());
         form.setCatName(catName);
 
-
         model.addAttribute("form", form);
-        return "admin/product/edit_confirm"; 
+        return "admin/product/edit_confirm";
     }
 
-    @PostMapping("/edit/confirm")
-    public String executeUpdate(@ModelAttribute("form") ProductModifyForm form, SessionStatus sessionStatus, 
+    @PostMapping(value = "/edit/confirm", params = "action=complete")
+    public String executeUpdate(@ModelAttribute("form") ProductModifyForm form, SessionStatus sessionStatus,
             RedirectAttributes redirectAttributes) {
         Integer id = form.getProId();
 
@@ -99,15 +94,23 @@ public class ProductModifyController {
 
         sessionStatus.setComplete();
 
-        return "redirect:/admin/product/edit/complete"; 
+        return "redirect:/admin/product/edit/complete";
     }
+
+    @PostMapping(value = "/edit/confirm", params = "action=back")
+    public String backToEditForm(
+            @ModelAttribute("form") ProductModifyForm form,
+            Model model) {
+
+        List<ProductCategory> categories = productModifyService.findAllProductCategory();
+        model.addAttribute("categories", categories);
+
+        return "admin/product/edit_form";
+    }
+
     @GetMapping("/edit/complete")
     public String showCompletePage(@RequestParam(value = "name", required = false) String name, Model model) {
         model.addAttribute("productName", name);
-        return "admin/product/edit_complete"; 
+        return "admin/product/edit_complete";
     }
 }
-
-
-
-

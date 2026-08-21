@@ -7,13 +7,15 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.fullness.stationary.entity.Product;
 import com.example.fullness.stationary.entity.ProductCategory;
 
+//商品検索レポジトリ
+
 @Mapper
 public interface ProductSearchRepository {
 
-    List<Product>selectAll();
+    List<ProductCategory> selectAllProductCategory();
 
-    List<ProductCategory>selectAllProductCategory();
+    List<Product> selectAll();
 
-    List<Product>selectByCatId(Integer catId);
+    List<Product> selectByCatId(Integer catId);
 
 }
