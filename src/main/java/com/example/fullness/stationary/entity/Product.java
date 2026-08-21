@@ -5,16 +5,22 @@ import lombok.Data;
 @Data
 public class Product {
 
-    private Integer pro_id;
+    // 商品ID
+    private Integer proId;
 
+    // 商品名
     private String name;
 
+    // 価格
     private Integer price;
 
-    private String image_url;
+    // 画像URL
+    private String imageUrl;
 
-    private Integer cat_id;
+    // 商品カテゴリID（外部キー）
+    private Integer catId;
 
-    private Integer delete_flg;
+    // 削除フラグ（1:削除）
+    private Integer deleteFlg;
 
 }

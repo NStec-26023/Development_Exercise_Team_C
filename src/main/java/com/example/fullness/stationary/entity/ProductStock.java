@@ -5,9 +5,12 @@ import lombok.Data;
 @Data
 public class ProductStock {
 
-    private Integer sto_id;
+    // 商品在庫ID
+    private Integer stoId;
 
+    // 商品在庫数
     private Integer quantity;
 
-    private Integer pro_id;
+    // 商品ID（外部キー）
+    private Integer proId;
 }
