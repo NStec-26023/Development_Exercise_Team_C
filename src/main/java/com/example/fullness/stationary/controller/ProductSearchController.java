@@ -17,44 +17,27 @@ import com.example.fullness.stationary.entity.Product;
 import com.example.fullness.stationary.entity.ProductCategory;
 import com.example.fullness.stationary.service.ProductSearchService;
 
+//商品検索コントローラークラス
 
 @Controller
-@RequestMapping("products")
+@RequestMapping("admin/product")
 public class ProductSearchController {
     @Autowired
-    private ProductSearchService productSearchService; 
+    private ProductSearchService productSearchService;
 
-    // @ModelAttribute("category")
-    // public List<ProductCategory> setUpCategories() {
-    //     List<ProductCategory> list =  productSearchService.findAllProductCategory();
+    @GetMapping
+    public String searchProducts(
+            @RequestParam(name = "catId", required = false) Integer catId,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            Model model) {
 
-    //     return list;
-    // }
-    @ModelAttribute("productCategoryForm")
-    public ProductCategoryForm setUpForm() {
-        return new ProductCategoryForm();
-    }
-    @GetMapping("/search")
-    public String showSearchForm(Model model) {
+        List<ProductCategory> categories = productSearchService.findAllProductCategory();
+        model.addAttribute("categories", categories);
+        model.addAttribute("selectedCategoryId", catId);
 
-        List<ProductCategory> productCategory = productSearchService.findAllProductCategory();
+        List<Product> products = productSearchService.findByCategory(catId);
+        model.addAttribute("products", products);
 
-        model.addAttribute("category", productCategory);
-
-        List<Product> allProducts = productSearchService.findAll();
-
-        model.addAttribute("productList", allProducts);
-        
-        return "products/search"; 
-    }
-    @PostMapping("/search")
-    public String searchProducts(@ModelAttribute ProductCategoryForm productCategoryForm,Model model) {
-    // public String searchProducts(@RequestParam(required = false) Integer catId,Model model) {
-        
-        List<Product> list = productSearchService.findByCategory(productCategoryForm.getCatId());
-        
-        model.addAttribute("productList", list);
-        
-        return "products/search";
+        return "admin/product/search";
     }
 }
