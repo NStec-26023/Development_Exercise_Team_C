@@ -1,45 +1,219 @@
-/* product_categoryテーブルにデータを挿入 */
-INSERT INTO product_category (cat_id, name) VALUES (nextval('seq_catno'), '文房具');
-INSERT INTO product_category (cat_id, name) VALUES (nextval('seq_catno'), 'PC雑貨');
-INSERT INTO product_category (cat_id, name) VALUES (nextval('seq_catno'), 'ノート・紙雑貨');
+/* departmentテーブル */
+CREATE TABLE department (
+    /* 部署ID：主キー */
+    dept_id integer ,
+    /* 部署名：100文字以内で保存 */
+    name VARCHAR(100),
+    primary key (dept_id)
+);
+
+CREATE sequence seq_deptno
+    start with 101
+    increment by 1
+    maxvalue 999;
 
 
-/* productテーブルにデータを挿入 */
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '鉛筆(黒)', '100', 'black_pen.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '油性ボールペン(黒)', '100', 'black_pen_o.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '水性ボールペン2(黒)', '220', 'black_pen_w.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '水性ボールペン(青)', '120', 'blue_pen_w.jpeg', '101', '1');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'USB有線式キーボード', '1400', 'keybord2.jpg', '102', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '無線式キーボード', '1900', 'keybord.jpg', '102', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '有線ゲーミングマウス', '3800', 'mouse_a.jpg', '102', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '有線光学式マウス', '500', 'mouse_b.jpg', '102', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'ワイヤレスマウス', '900', 'mouse_c.jpg', '102', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'ワイヤレストラックボール', '1300', 'mouse_d.jpeg', '102', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '水性ボールペン(赤)', '120', 'red_pen_w.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '水性ボールペン(黒)', '120', 'black_pen_w.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'マーカー(緑)', '150', 'green_maker.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'マーカー(黄)', '150', 'yellow_maker.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'マーカー(青)', '150', 'blue_maker.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '筆ペン(黒)', '150', 'black_fudepen.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), '筆ペン(赤)', '150', 'red_fudepen.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'ノート(青)', '160', 'blue_note.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'ノート(緑)', '160', 'green_note.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'ノート(橙)', '160', 'orange_note.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'ノート(紫)', '160', 'purple_note.jpg', '101', '0');
-INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg) VALUES (nextval('seq_prono'), 'ノート(白)', '160', 'white_note.jpg', '101', '0');
+/* employeeテーブル */
+CREATE TABLE employee (
+    /* 社員ID：主キー */
+    emp_id integer ,
+    /* 社員名：100文字以内で保存 */
+    name VARCHAR(100),
+    /* 社員名カナ：100文字以内で保存 */
+    kana VARCHAR(100),
+    /* 部署ID*/
+    dept_id integer,
+    primary key (emp_id),
+    FOREIGN key (dept_id) references department (dept_id)
+);
+
+CREATE sequence seq_empno
+    start with 1001
+    increment by 1
+    maxvalue 9999;
 
 
-/* product_stockテーブルにデータを挿入 */
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '0', '001');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '15', '002');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '3', '003');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '20', '004');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '50', '005');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '0', '006');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '8', '007');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '120', '008');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '1', '009');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '24', '010');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '45', '011');
-INSERT INTO product_stock (sto_id, quantity, pro_id) VALUES (nextval('seq_stono'), '10', '012');
+/* employee_accountテーブル */
+CREATE TABLE employee_account (
+    /* アカウントID：主キー */
+    acc_id integer ,
+    /* アカウント名：20文字以内で保存 */
+    name VARCHAR(20),
+    /* パスワード：225文字以内で保存 */
+    password VARCHAR(225),
+    /* 社員ID */
+    emp_id integer,
+    primary key (acc_id),
+    FOREIGN key (emp_id) references employee (emp_id)
+);
+
+CREATE sequence seq_accno
+    start with 001
+    increment by 1
+    maxvalue 999;
+
+
+/* product_categoryテーブル */
+CREATE TABLE product_category (
+    /* 商品カテゴリID：主キー */
+    cat_id integer ,
+    /* 商品カテゴリ名：30文字以内で保存 */
+    name VARCHAR(30),
+    primary key (cat_id)
+);
+
+CREATE sequence seq_catno
+    start with 101
+    increment by 1
+    maxvalue 999;
+
+
+/* productテーブル */
+CREATE TABLE product (
+    /* 商品ID：主キー */
+    pro_id integer ,
+    /* 商品名：100文字以内で保存 */
+    name VARCHAR(100),
+    /* 価格 */
+    price integer,
+    /* 画像URL：200文字以内で保存 */
+    image_url VARCHAR(200),
+    /* 商品カテゴリID */
+    cat_id integer,
+    /* 削除フラグ */
+    delete_flg integer,
+    primary key (pro_id),
+    FOREIGN key (cat_id) references product_category (cat_id)
+);
+
+CREATE sequence seq_prono
+    start with 001
+    increment by 1
+    maxvalue 999;
+
+
+/* product_stockテーブル */
+CREATE TABLE product_stock (
+    /* 商品在庫ID：主キー */
+    sto_id integer ,
+    /* 商品在庫数 */
+    quantity integer,
+    /* 商品ID */
+    pro_id integer,
+    primary key (sto_id),
+    FOREIGN key (pro_id) references product (pro_id)
+);
+
+CREATE sequence seq_stono
+    start with 1001
+    increment by 1
+    maxvalue 9999;
+
+
+/* order_statusテーブル */
+CREATE TABLE order_status (
+    /* 注文ステータスID：主キー */
+    sta_id integer ,
+    /* 注文ステータス名：100文字以内で保存 */
+    name VARCHAR(100),
+    primary key (sta_id)
+);
+
+CREATE sequence seq_stano
+    start with 101
+    increment by 1
+    maxvalue 999;
+
+
+/* customerテーブル */
+CREATE TABLE customer (
+    /* 顧客ID：主キー */
+    cus_id integer ,
+    /* 顧客名：20文字以内で保存 */
+    name VARCHAR(20),
+    /* 住所1：100文字以内で保存 */
+    address1 VARCHAR(100),
+    /* 住所2：100文字以内で保存 */
+    address2 VARCHAR(100),
+    /* 電話番号：20文字以内で保存 */
+    phone_number VARCHAR(20),
+    /* メールアドレス：200文字以内で保存 */
+    mail_address VARCHAR(200),
+    /* アカウント名：30文字以内で保存 */
+    username VARCHAR(30),
+    /* パスワード：225文字以内で保存 */
+    password VARCHAR(225),
+    /* 登録日 */
+    register_date TIMESTAMP,
+    primary key (cus_id)
+);
+
+CREATE sequence seq_cusno
+    start with 10001
+    increment by 1
+    maxvalue 99999;
+
+
+
+/* payment_methodテーブル */
+CREATE TABLE payment_method (
+    /* 支払い方法ID：主キー */
+    pay_id integer ,
+    /* 支払い方法名：100文字以内で保存 */
+    name VARCHAR(100),
+    primary key (pay_id)
+);
+
+CREATE sequence seq_payno
+    start with 001
+    increment by 1
+    maxvalue 999;
+
+
+/* ordersテーブル */
+CREATE TABLE orders (
+    /* 注文ID：主キー */
+    ord_id integer ,
+    /* 注文日 */
+    order_date TIMESTAMP,
+    /* 合計金額 */
+    amount_total integer,
+    /* 顧客ID */
+    cus_id integer,
+    /* 注文ステータスID */
+    sta_id integer,
+    /* 支払い方法ID */
+    pay_id integer,
+    primary key (ord_id),
+    FOREIGN key (cus_id) references customer (cus_id),
+    FOREIGN key (sta_id) references order_status (sta_id),
+    FOREIGN key (pay_id) references payment_method (pay_id)
+);
+
+CREATE sequence seq_ordno
+    start with 1
+    increment by 1
+    maxvalue 999;
+
+/* orders_detailテーブル */
+CREATE TABLE orders_detail (
+    /* 注文明細ID：主キー */
+    det_id integer ,
+    /* 注文ID */
+    ord_id integer,
+    /* 商品ID */
+    pro_id integer,
+    /* 購入時単価 */
+    unit_price integer,
+    /* 購入数 */
+    counts integer,
+    primary key (det_id),
+    FOREIGN key (ord_id) references orders (ord_id),
+    FOREIGN key (pro_id) references product (pro_id)
+);
+
+CREATE sequence seq_detno
+    start with 101
+    increment by 1
+    maxvalue 999;
     
