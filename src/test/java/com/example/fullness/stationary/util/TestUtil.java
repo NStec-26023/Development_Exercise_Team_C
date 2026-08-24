@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.example.fullness.stationary.entity.Product;
 import com.example.fullness.stationary.entity.ProductCategory;
+import com.example.fullness.stationary.entity.ProductStock;
 
 public class TestUtil {
 
@@ -270,5 +271,22 @@ public class TestUtil {
         products.add(pro109);
         products.add(pro110);
         return products;
+    }
+
+    public static ProductStock getExpectedProductStock1() {
+        ProductStock stock = new ProductStock();
+        stock.setStoId(1001);
+        stock.setQuantity(0);
+        stock.setProId(1);
+
+        List<Product> products = new ArrayList<>();
+        products.add(pro101);
+        stock.setProducts(products);
+
+        return stock;
+    }
+
+    public static String getExpectedCategoryName101() {
+        return cat101.getName();
     }
 }
