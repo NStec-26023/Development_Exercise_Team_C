@@ -1,8 +1,14 @@
 package com.example.fullness.stationary.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,12 +43,18 @@ public class EmployeeAccountController {
     }
 
     @PostMapping("/form")
-    public String confirm(@ModelAttribute("form") EmployeeRegisterForm form) {
+    public String confirm(@Validated @ModelAttribute("form") EmployeeRegisterForm form,
+            BindingResult bindingResult, Model model) {
 
-        // System.out.println("DEBUG: 社員ID = " + form.getEmpId());
-        // System.out.println("DEBUG: 社員名 = " + form.getEmpName());
-        // System.out.println("DEBUG: アカウント名 = " + form.getAccountName());
-
+        if (bindingResult.hasErrors()) {
+            List<String> errorMessages = new ArrayList<>();
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+            model.addAttribute("errorMessages", errorMessages);
+            model.addAttribute("employees", employeeRegisterService.getUnregisteredEmployeeList());
+            return "admin/account/form";
+        }
         // 1. 社員IDから名前を検索
         if (form.getEmpId() != null) {
             Employee employee = employeeRegisterService.selectByEmpId(form.getEmpId());
@@ -84,7 +96,11 @@ public class EmployeeAccountController {
 
     // 4. 完了画面
     @GetMapping("/complete")
-    public String showComplete() {
+    public String showComplete(Model model) {
+        if (!model.containsAttribute("registeredEmpName")) {
+            // セッションが切れてデータが消えた場合や、直接URLを入力された場合はFP001へ
+            return "admin/menu";
+        }
         return "admin/account/complete";
     }
 }
