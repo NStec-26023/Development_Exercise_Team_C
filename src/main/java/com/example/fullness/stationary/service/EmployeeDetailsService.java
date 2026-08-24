@@ -50,17 +50,16 @@ public class EmployeeDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("ユーザーが見つかりません");
         }
         // 3. 権限を取得して EmployeeDetails を返却
-        Collection<GrantedAuthority> authorities = getAuthorities(employeeAccount);
+        Collection<GrantedAuthority> authorities = getAuthorities();
         return new EmployeeDetails(employeeAccount, authorities);
     }
 
     /**
      * 社員アカウントに付与する権限（ロール）のコレクションを取得します。
      * 
-     * @param employeeAccount 社員アカウントエンティティ
      * @return 権限のコレクション
      */
-    private Collection<GrantedAuthority> getAuthorities(EmployeeAccount employeeAccount) {
+    private Collection<GrantedAuthority> getAuthorities() {
 
         return AuthorityUtils.createAuthorityList("ROLE_EMPLOYEE");
     }
