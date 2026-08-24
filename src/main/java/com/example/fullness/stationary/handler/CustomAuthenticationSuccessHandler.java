@@ -27,8 +27,8 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
      * 
      * @param EmployeeLoginAttemptService ログイン試行管理サービス
      */
-    public CustomAuthenticationSuccessHandler(EmployeeLoginAttemptService EmployeeLoginAttemptService) {
-        this.loginAttemptService = EmployeeLoginAttemptService;
+    public CustomAuthenticationSuccessHandler(EmployeeLoginAttemptService employeeLoginAttemptService) {
+        this.loginAttemptService = employeeLoginAttemptService;
         setDefaultTargetUrl("/"); // ログイン成功後の遷移先
     }
 
