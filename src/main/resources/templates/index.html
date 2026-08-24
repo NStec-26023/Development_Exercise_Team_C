@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>トップ画面</title>
+</head>
+
+<body>
+
+    <!-- ================= ヘッダー ================= -->
+    <header
+        style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: greenyellow;">
+        <!-- ヘッダー左側：商品検索へのリンク -->
+        <div class="header-left">
+            <a style="text-decoration: none; font-weight: bold; color:#218838;">フルネス文具</a>
+            <a th:href="@{/search}" style="text-decoration: none;color:#218838;">商品検索</a>
+        </div>
+
+        <!-- ヘッダー右側：ログイン状態による切り替え -->
+        <div class="header-right">
+            <!-- ログインしている場合 -->
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/history}" style="margin-right: 15px;color:#218838;">購入履歴</a>
+                <a th:href="@{/logout}" style="margin-right: 15px;color:#218838;">ログアウト</a>
+                <span th:text="${session.loginUser.customerName + 'さん'} ;">顧客名さん</span>
+            </div>
+
+            <!-- ログインしていない場合（必要に応じて実装） -->
+            <div sec:authorize="isAnonymous()">
+                <!-- 未ログイン時のヘッダー右側が必要な場合はここに記述 -->
+                <a th:href="@{/register}" style="margin-right: 15px;color:#218838;">アカウント登録</a>
+                <a th:href="@{/login}" style="margin-right: 15px;color:#218838;">ログイン</a>
+            </div>
+        </div>
+    </header>
