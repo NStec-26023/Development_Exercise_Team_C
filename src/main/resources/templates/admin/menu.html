@@ -15,7 +15,8 @@
         <div class="admin-panel p-4 mx-auto" style="max-width: 640px;">
             <h1 class="text-center mb-4">メニュー</h1>
 
-            <p class="text-center" sec:authorize="isAuthenticated()">ようこそ、<span th:text="${#authentication.name}">担当者名</span>さん</p>
+            <p class="text-center" sec:authorize="isAuthenticated()">ようこそ、<span
+                    th:text="${#authentication.name}">担当者名</span>さん</p>
             <div class="text-center">
                 <img th:src="@{/images/Shop_Img1.jpeg}" alt="ようこそ" class="img-fluid rounded" style="max-height: 240px;">
             </div>

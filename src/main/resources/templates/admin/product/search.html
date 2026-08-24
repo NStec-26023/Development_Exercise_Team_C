@@ -13,6 +13,15 @@
     <div class="admin-panel p-4 mx-auto" style="max-width: 900px;">
         <h1 class="text-center mb-4">商品検索</h1>
 
+<<<<<<< HEAD
+        <form th:action="@{/admin/product}" method="GET" class="d-flex justify-content-center gap-2 mb-4">
+            <select name="catId" class="form-select w-auto">
+                <option value="">すべて</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.catId}"
+                        th:text="${cat.name}"
+                        th:selected="${selectedCategoryId != null and selectedCategoryId == cat.catId}"></option>
+=======
         <form th:action="@{/admin/product}" method="get" class="d-flex justify-content-center gap-2 mb-4">
             <select name="categoryId" class="form-select w-auto">
                 <option value="">すべて</option>
@@ -20,6 +29,7 @@
                         th:value="${cat.id}"
                         th:text="${cat.name}"
                         th:selected="${selectedCategoryId != null and selectedCategoryId == cat.id}"></option>
+>>>>>>> development
             </select>
             <button type="submit" class="btn btn-fs">カテゴリ検索</button>
             <a th:href="@{/admin/product/add}" class="btn btn-fs-solid">商品追加</a>
@@ -41,6 +51,35 @@
             </thead>
             <tbody>
             <tr th:each="p : ${products}">
+<<<<<<< HEAD
+                <td><img th:src="@{'/images/'+${p.imageUrl}}" th:alt="${p.name}" class="table-thumb"></td>
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.price} + '円'"></td>
+                <td><a th:href="@{/admin/product/edit/{id}(id=${p.proId})}" class="btn btn-fs btn-sm">修正</a></td>
+                <td><a th:href="@{/admin/product/delete/{id}(id=${p.proId})}" class="btn btn-fs btn-sm">削除</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- <nav th:if="${totalPages > 1}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/product(catId=${selectedCategoryId}, page=1)}">最初</a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/product(catId=${selectedCategoryId}, page=${currentPage - 1})}">前へ</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/admin/product(catId=${selectedCategoryId}, page=${i})}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/product(catId=${selectedCategoryId}, page=${currentPage + 1})}">次へ</a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/product(catId=${selectedCategoryId}, page=${totalPages})}">最後</a>
+                </li>
+            </ul>
+        </nav> -->
+=======
                 <td><img th:src="@{${p.imagePath}}" th:alt="${p.name}" class="table-thumb"></td>
                 <td th:text="${p.name}"></td>
                 <td th:text="${p.price} + '円'"></td>
@@ -69,6 +108,7 @@
                 </li>
             </ul>
         </nav>
+>>>>>>> development
     </div>
 </main>
 
