@@ -37,7 +37,12 @@ public class EmployeeAccountController {
 
     // 登録画面の表示
     @GetMapping("/form")
-    public String showRegisterForm(@ModelAttribute("form") EmployeeRegisterForm form, Model model) {
+    public String showRegisterForm(@ModelAttribute("form") EmployeeRegisterForm form, SessionStatus sessionStatus,
+            Model model) {
+        if (!model.containsAttribute("errorMessages")) {
+            sessionStatus.setComplete();
+            model.addAttribute("form", new EmployeeRegisterForm());
+        }
         model.addAttribute("employees", employeeRegisterService.getUnregisteredEmployeeList());
         return "admin/account/form";
     }
@@ -45,7 +50,15 @@ public class EmployeeAccountController {
     @PostMapping("/form")
     public String confirm(@Validated @ModelAttribute("form") EmployeeRegisterForm form,
             BindingResult bindingResult, Model model) {
-
+        // 1. 社員IDから名前を検索
+        if (form.getEmpId() != null) {
+            Employee employee = employeeRegisterService.selectByEmpId(form.getEmpId());
+            if (employee != null) {
+                // 名前をセット（セッションのformに反映される）
+                form.setEmpName(employee.getName());
+            }
+        }
+        // バリデーション
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
             for (ObjectError error : bindingResult.getAllErrors()) {
@@ -54,14 +67,6 @@ public class EmployeeAccountController {
             model.addAttribute("errorMessages", errorMessages);
             model.addAttribute("employees", employeeRegisterService.getUnregisteredEmployeeList());
             return "admin/account/form";
-        }
-        // 1. 社員IDから名前を検索
-        if (form.getEmpId() != null) {
-            Employee employee = employeeRegisterService.selectByEmpId(form.getEmpId());
-            if (employee != null) {
-                // 名前をセット（セッションのformに反映される）
-                form.setEmpName(employee.getName());
-            }
         }
         return "admin/account/confirm";
     }

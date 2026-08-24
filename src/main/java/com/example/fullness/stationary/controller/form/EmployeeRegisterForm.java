@@ -12,9 +12,9 @@ import lombok.Data;
 public class EmployeeRegisterForm {
     private Integer accId; // 自動採番アカウントID
 
+    @NotNull(message = "社員名を選択してください")
     private Integer empId; // 選択された社員の社員ID
 
-    @NotNull(message = "社員名を選択してください")
     private String empName; // 選択された社員名
 
     @NotBlank(message = "アカウントを入力してください")
