@@ -4,22 +4,43 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--UC014商品カテゴリ登録-->
-<mapper namespace="">
+<mapper namespace="com.example.fullness.stationary.repository.ProductCategoryRegisterRepository">
     <!--商品カテゴリ登録-->
-
+    <!-- 
+      keyProperty="catId" : 採番されたIDを、Javaオブジェクトのどの変数にセットするかを指定
+    -->
     <insert 
-    id = ""
-    parameterType = "">
+    id = "insertProductCategory"
+    parameterType = "com.example.fullness.stationary.entity.ProductCategory" 
+    >
 
-    <selectKey keyProperty="" resultType="" order="BEFORE">
+    <selectKey
+    keyProperty="catId"
+    resultType="Integer"
+    order="BEFORE"
+    >
     <![CDATA[ 
-    select nextVAL('') 
+    select nextVAL('seq_catno') 
     ]]>
     </selectKey>
 
     <![CDATA[
-    insert into procuct_category (cat_id,name)
+    insert into product_category (cat_id,name)
     values (#{catId},#{name})
     ]]>
 
     </insert>
+
+
+
+
+    <!--商品カテゴリ登録重複チェック-->
+    <select
+    id = "findByName"
+    resultType = "com.example.fullness.stationary.entity.ProductCategory">
+
+    <![CDATA[
+    select * from product_category where name = #{name}
+    ]]>
+    </select>
+</mapper>
