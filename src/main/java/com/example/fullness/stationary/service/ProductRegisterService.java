@@ -37,13 +37,14 @@ public class ProductRegisterService {
     /**
      * 商品情報と在庫数をそれぞれのテーブルに連続で登録する
      */
-    public void saveProduct(ProductRegisterForm form, String imageUrl) {
+    public void saveProduct(ProductRegisterForm form) {
+        // public void saveProduct(ProductRegisterForm form, String imageUrl) {
         // --- 1段階目：商品情報のEntity（Product）組み立てと保存 ---
         Product product = new Product();
         product.setCatId(form.getCatId()); // カテゴリIDをセット
         product.setName(form.getName()); // 商品名をセット
         product.setPrice(form.getPrice()); // 価格をセット
-        product.setImageUrl(imageUrl); // コントローラー側で処理した画像のURL・パスをセット
+        // product.setImageUrl(imageUrl); // コントローラー側で処理した画像のURL・パスをセット
 
         // 商品テーブル（product）にインサートを実行
         productRegisterRepository.insertProduct(product);

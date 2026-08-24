@@ -34,10 +34,10 @@ public class ProductRegisterForm implements Serializable {
     @NotNull(message = "カテゴリを選択してください")
     private Integer catId;
 
-    //５．画像ファイル
-    private MultipartFile image;
+    // //５．画像ファイル
+    // private MultipartFile image;
 
-    //６．画像のファイルパス
-    private String imageUrl;
+    // //６．画像のファイルパス
+    // private String imageUrl;
 
 }

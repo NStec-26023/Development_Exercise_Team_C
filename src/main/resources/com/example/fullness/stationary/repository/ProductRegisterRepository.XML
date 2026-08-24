@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC
     "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.fullness.stationary.repository">
+<mapper namespace="com.example.fullness.stationary.repository.ProductRegisterRepository">
 	<!-- カテゴリ一覧取得 -->
     <select id="findAllCategories" resultType="com.example.fullness.stationary.entity.ProductCategory">
         <![CDATA[ 
-            select * from product_category
+            select cat_id as catId,name from product_category
         ]]>
     </select>
 
@@ -34,33 +34,6 @@
             INSERT INTO product_stock (sto_id, quantity, pro_id)
             VALUES (#{stoId}, #{quantity}, #{proId});
         ]]> 
-    </insert>
-
-
-
-
-
-    <!-- 
-      ★確認・修正ポイント：
-      1. id はインターフェースのメソッド名「insertProduct」と完全に一致させます。
-      2. parameterType には、引数で受け取る「Product」Entityクラスのフルパスを正しく記述します。
-      3. INSERT INTO の後ろのテーブル名（products）やカラム名は、pgAdminの実際のDB構造に合わせてください。
-      4. VALUESの中の #{〇〇} には、Product Entityクラスの「変数名（フィールド名）」を正確に書いてください。
-    -->
-    
-        INSERT INTO products (
-            product_name, 
-            price, 
-            stock, 
-            category_id, 
-            image_path
-        ) VALUES (
-            #{productName}, 
-            #{price}, 
-            #{stock}, 
-            #{categoryId}, 
-            #{imagePath}
-        )
     </insert>
 
 </mapper>
