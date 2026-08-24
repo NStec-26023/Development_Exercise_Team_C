@@ -25,7 +25,7 @@
     <select id="selectAll" resultMap="productResult">
 
         <![CDATA[
-        SELECT * FROM product
+        SELECT * FROM product ORDER BY pro_id ASC
         ]]>
 
     </select> 
@@ -34,6 +34,7 @@
         <![CDATA[
         select * from Product
         WHERE cat_id = #{catId}
+        ORDER BY pro_id ASC
           
         ]]>
 
