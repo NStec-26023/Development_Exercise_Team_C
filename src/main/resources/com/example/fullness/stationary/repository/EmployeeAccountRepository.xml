@@ -3,7 +3,6 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.fullness.stationary.repository.EmployeeAccountRepository">
-<<<<<<< HEAD
 <!-- アカウント名で担当者１件取得 -->
     <select id="findByName" resultType="com.example.fullness.stationary.entity.EmployeeAccount">
          <![CDATA[
@@ -54,20 +53,4 @@
     </insert>
 
 
-=======
-    <resultMap id="EmployeeAccountResultMap" type="com.example.fullness.stationary.entity.EmployeeAccount">
-        <id property="accId" column="acc_id" />
-        <result property="name" column="name" />
-        <result property="password" column="password" />
-        <result property="empId" column="emp_id" />
-    </resultMap>
-<!-- 社員名で社員１件取得 -->
-    <select id="findByName" resultMap="EmployeeAccountResultMap">
-         <![CDATA[
-        SELECT * FROM employee_account
-        WHERE name = #{name}
-        ]]>
-    </select>
-
->>>>>>> 8791f08308d0b2f5168c6abfec57218a8fede49e
 </mapper>
