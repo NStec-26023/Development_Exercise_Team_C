@@ -2,10 +2,66 @@
 <!DOCTYPE mapper PUBLIC
     "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="">
-	<!-- 商品一覧 -->
-    <select id="selectAll" resultType="">
+<mapper namespace="com.example.fullness.stationary.repository">
+	<!-- カテゴリ一覧取得 -->
+    <select id="findAllCategories" resultType="com.example.fullness.stationary.entity.ProductCategory">
         <![CDATA[ 
-            select * from product
+            select * from product_category
         ]]>
     </select>
+
+	<!-- 商品登録 -->
+    <insert id="insertProduct" parameterType="com.example.fullness.stationary.entity.Product">
+        <selectKey keyProperty="proId" resultType="int" order="BEFORE">
+            <![CDATA[
+                select nextVAL('seq_prono');
+            ]]>
+        </selectKey>
+        <![CDATA[ 
+            INSERT INTO product (pro_id, name, price, image_url, cat_id, delete_flg)
+            VALUES (#{proId}, #{name}, #{price}, #{imageUrl}, #{catId}, 0);
+        ]]> 
+    </insert>
+
+    <!-- 在庫数登録 -->
+    <insert id="insertProductStock" parameterType="com.example.fullness.stationary.entity.ProductStock">
+        <selectKey keyProperty="stoId" resultType="int" order="BEFORE">
+            <![CDATA[
+                select nextVAL('seq_stono');
+            ]]>
+        </selectKey>
+        <![CDATA[ 
+            INSERT INTO product_stock (sto_id, quantity, pro_id)
+            VALUES (#{stoId}, #{quantity}, #{proId});
+        ]]> 
+    </insert>
+
+
+
+
+
+    <!-- 
+      ★確認・修正ポイント：
+      1. id はインターフェースのメソッド名「insertProduct」と完全に一致させます。
+      2. parameterType には、引数で受け取る「Product」Entityクラスのフルパスを正しく記述します。
+      3. INSERT INTO の後ろのテーブル名（products）やカラム名は、pgAdminの実際のDB構造に合わせてください。
+      4. VALUESの中の #{〇〇} には、Product Entityクラスの「変数名（フィールド名）」を正確に書いてください。
+    -->
+    
+        INSERT INTO products (
+            product_name, 
+            price, 
+            stock, 
+            category_id, 
+            image_path
+        ) VALUES (
+            #{productName}, 
+            #{price}, 
+            #{stock}, 
+            #{categoryId}, 
+            #{imagePath}
+        )
+    </insert>
+
+</mapper>
+

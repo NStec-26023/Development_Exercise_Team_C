@@ -23,7 +23,8 @@
         </table>
         <img th:src="@{${form.imagePath}}" th:alt="${form.name}" class="img-fluid mb-4" style="max-height: 160px;">
 
-        <form th:action="@{/admin/product/add/confirm}" method="post">
+        <!-- Post用URL変更 -->
+        <form th:action="@{/admin/product/add/confirm/input}" method="post">
             <a th:href="@{/admin/product}" class="btn btn-link link-fs">キャンセル</a>
             <button type="submit" name="action" value="back" class="btn btn-fs px-4">戻る</button>
             <button type="submit" name="action" value="complete" class="btn btn-fs-solid px-4">完了</button>
