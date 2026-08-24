@@ -1,5 +1,7 @@
 package com.example.fullness.stationary.controller.form;
 
+import com.example.fullness.stationary.validator.UniqueAccountName;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -18,7 +20,7 @@ public class EmployeeRegisterForm {
     @NotBlank(message = "アカウントを入力してください")
     @Size(min = 5, max = 20, message = "アカウント名は5～20文字で入力してください")
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "アカウント名は半角英数字で入力してください")
-    // @UniqueAccountName(message = "このアカウント名は既に使用されています")
+    @UniqueAccountName(message = "このアカウント名は既に使用されています")
     private String accountName; // 入力されたアカウント名
 
     @NotBlank(message = "パスワードを入力してください")
