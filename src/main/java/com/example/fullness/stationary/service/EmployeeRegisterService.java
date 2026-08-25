@@ -28,6 +28,7 @@ public class EmployeeRegisterService {
         return employeeAccountRepository.selectUnregisteredEmployees();
     }
 
+    // 社員IDで社員情報一件取得
     public Employee selectByEmpId(Integer empId) {
         return employeeRepository.findByEmpId(empId);
 

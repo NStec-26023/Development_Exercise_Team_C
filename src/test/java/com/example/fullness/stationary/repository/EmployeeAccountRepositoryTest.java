@@ -23,7 +23,6 @@ import com.example.fullness.stationary.entity.EmployeeAccount;
 public class EmployeeAccountRepositoryTest {
     @Autowired
     EmployeeAccountRepository employeeAccountRepository;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Test
     // アカウント名で正しいアカウント名とパスワードが取得されること
@@ -62,25 +61,25 @@ public class EmployeeAccountRepositoryTest {
     }
 
     @Test
-    public void TestInsertAccount() {
+    public void testInsertAccount() {
 
         EmployeeAccount expected = new EmployeeAccount();
         expected.setEmpId(1001);
         expected.setName("fullness");
+        expected.setPassword("fullness");
 
         EmployeeRegisterForm form = new EmployeeRegisterForm();
         form.setEmpId(1001);
         form.setAccountName("fullness");
         form.setPassword("fullness");
-        form.setPassword(passwordEncoder.encode(form.getPassword()));
         employeeAccountRepository.insertAccount(form);
         EmployeeAccount actual = employeeAccountRepository.findByName("fullness");
 
         assertNotNull(actual.getAccId());// 自動採番
         assertEquals(expected.getEmpId(), actual.getEmpId());
         assertEquals(expected.getName(), actual.getName());
-        // assertEquals(expected.getPassword(), actual.getPassword());
-        assertTrue(passwordEncoder.matches("fullness", actual.getPassword()),
-                "パスワードが正しくハッシュ化されていません");
+        assertEquals(expected.getPassword(), actual.getPassword());
+        // assertTrue(passwordEncoder.matches("fullness", actual.getPassword()),
+        // "パスワードが正しくハッシュ化されていません");
     }
 }
