@@ -34,6 +34,7 @@
          <selectKey keyProperty="accId" resultType="int" order="BEFORE">
         <![CDATA[
         SELECT nextval('seq_accno') as accId
+        ;
         ]]>
     </selectKey>
      <![CDATA[
@@ -44,7 +45,7 @@
             password, 
             emp_id
         )VALUES( 
-            nextval('seq_accno'),
+            (SELECT COALESCE(MAX(acc_id), 0) + 1 FROM employee_account),
             #{accountName}, 
             #{password},
             #{empId}
