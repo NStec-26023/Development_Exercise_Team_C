@@ -1,7 +1,7 @@
 package com.example.fullness.stationary.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +20,8 @@ public class EmployeeRegisterService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    // @Autowired(required = false)
-    // private PasswordEncoder passwordEncoder;
+    @Autowired(required = false)
+    private PasswordEncoder passwordEncoder;
 
     // 担当者未登録社員一覧の取得
     public List<Employee> getUnregisteredEmployeeList() {
@@ -37,9 +37,9 @@ public class EmployeeRegisterService {
     @Transactional
     public void registerAccount(EmployeeRegisterForm employeeRegisterForm) {
         // パスワードのハッシュ化（Spring Security導入時）
-        // if (passwordEncoder != null) {
-        // form.setPassword(passwordEncoder.encode(form.getPassword()));
-        // }
+        if (passwordEncoder != null) {
+            employeeRegisterForm.setPassword(passwordEncoder.encode(employeeRegisterForm.getPassword()));
+        }
         employeeAccountRepository.insertAccount(employeeRegisterForm);
     }
 }

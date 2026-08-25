@@ -18,7 +18,7 @@ public class EmployeeRegisterServiceTest {
     EmployeeRegisterService employeeRegisterService;
 
     @Test
-    public void getUnregisteredEmployeeList() {
+    public void TestGetUnregisteredEmployeeList() {
 
         List<Employee> actual = employeeRegisterService.getUnregisteredEmployeeList();
 
