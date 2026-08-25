@@ -2,6 +2,7 @@ package com.example.fullness.stationary.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.fullness.stationary.controller.form.EmployeeRegisterForm;
 import com.example.fullness.stationary.entity.Employee;
@@ -20,6 +23,7 @@ import com.example.fullness.stationary.entity.EmployeeAccount;
 public class EmployeeAccountRepositoryTest {
     @Autowired
     EmployeeAccountRepository employeeAccountRepository;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Test
     // アカウント名で正しいアカウント名とパスワードが取得されること
@@ -61,21 +65,22 @@ public class EmployeeAccountRepositoryTest {
     public void TestInsertAccount() {
 
         EmployeeAccount expected = new EmployeeAccount();
-        expected.setEmpId(999);
-        expected.setName("testuser");
-        expected.setPassword("$2a$12$ozrjKbYznS/zgpJTljGk4uPCCocQuVWCQBvmY2rHL1R4KWnY5bCPC");// ハッシュ値にすべき
+        expected.setEmpId(1001);
+        expected.setName("fullness");
 
         EmployeeRegisterForm form = new EmployeeRegisterForm();
-        form.setEmpId(999);
-        form.setAccountName("testuser");
-        form.setPassword("testuserpassword");// 生PW
+        form.setEmpId(1001);
+        form.setAccountName("fullness");
+        form.setPassword("fullness");
+        form.setPassword(passwordEncoder.encode(form.getPassword()));
         employeeAccountRepository.insertAccount(form);
-        EmployeeAccount actual = employeeAccountRepository.findByName("testuser");
+        EmployeeAccount actual = employeeAccountRepository.findByName("fullness");
 
-        assertNotNull(actual);
+        assertNotNull(actual.getAccId());// 自動採番
         assertEquals(expected.getEmpId(), actual.getEmpId());
         assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getPassword(), actual.getPassword());
-
+        // assertEquals(expected.getPassword(), actual.getPassword());
+        assertTrue(passwordEncoder.matches("fullness", actual.getPassword()),
+                "パスワードが正しくハッシュ化されていません");
     }
 }
