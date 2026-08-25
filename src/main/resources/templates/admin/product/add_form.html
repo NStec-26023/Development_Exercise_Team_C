@@ -26,29 +26,33 @@
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">商品名</label>
                     <div class="col-sm-8">
-                        <input type="text" name="name" class="form-control" th:value="${form.name}" maxlength="20">
+                        <input type="text" th:field="*{name}" class="form-control" th:value="${form.name}" maxlength="20">
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></p>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">単価</label>
                     <div class="col-sm-8">
-                        <input type="text" name="price" class="form-control" th:value="${form.price}">
+                        <input type="text" th:field="*{price}" class="form-control" th:value="${form.price}">
+                        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color: red;"></p>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">在庫数</label>
                     <div class="col-sm-8">
-                        <input type="text" name="quantity" class="form-control" th:value="${form.quantity}">
+                        <input type="text" th:field="*{quantity}" class="form-control" th:value="${form.quantity}">
+                        <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" style="color: red;"></p>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">商品カテゴリ</label>
                     <div class="col-sm-8">
-                        <select name="catId" class="form-select">
+                        <select th:field="*{catId}" class="form-select">
                             <option value="">選択してください</option>
                             <option th:each="cat : ${categories}" th:value="${cat.catId}" th:text="${cat.name}"
                                 th:selected="${form.catId != null and form.catId == cat.catId}"></option>
                         </select>
+                        <p th:if="${#fields.hasErrors('catId')}" th:errors="*{catId}" style="color: red;"></p>
                     </div>
                 </div>
                 <!-- <div class="mb-3 row">

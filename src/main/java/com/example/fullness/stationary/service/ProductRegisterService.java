@@ -50,7 +50,7 @@ public class ProductRegisterService {
         productRegisterRepository.insertProduct(product);
 
         // --- 2段階目：自動生成されたIDを取得して在庫数を保存 ---
-        Integer generatedProductId = product.getProId();
+        Integer generatedProductId = product.getProId();  // 商品IDを取り出す
         Integer stockCount = form.getQuantity(); // Formから在庫数を取り出す
 
         // ProductStockオブジェクトを新しく作る（組み立てる）

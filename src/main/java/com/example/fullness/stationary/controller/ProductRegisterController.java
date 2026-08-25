@@ -26,6 +26,9 @@ import com.example.fullness.stationary.controller.form.ProductRegisterForm;
 import com.example.fullness.stationary.entity.ProductCategory;
 import com.example.fullness.stationary.service.ProductRegisterService;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 @Controller
 @RequestMapping("/admin/product")
 @SessionAttributes(types = ProductRegisterForm.class)
@@ -35,10 +38,12 @@ public class ProductRegisterController {
     ProductRegisterService productRegisterService;
 
     // // 画像ファイルをサーバー内に保存するためのフォルダ指定
-    // private final String UPLOAD_DIR = "src/main/java/com/example/fullness/stationary/resources/static/images/";
+    // private final String UPLOAD_DIR =
+    // "src/main/java/com/example/fullness/stationary/resources/static/images/";
 
     // // 許可する画像形式（Wordファイルなどはここに含まれないためエラーになります）
-    // private final List<String> ALLOWED_TYPES = Arrays.asList("image/jpeg", "image/png", "image/jpg");
+    // private final List<String> ALLOWED_TYPES = Arrays.asList("image/jpeg",
+    // "image/png", "image/jpg");
 
     // @Autowired
     // public ProductRegisterController(ProductRegisterService
@@ -70,51 +75,58 @@ public class ProductRegisterController {
      * 2. 確認処理（POST）➔ バリデーション＆画像保存 ➔ 成功したらリダイレクト
      */
     @PostMapping("/add/input")
-    public String validateForConfirm(@Validated @ModelAttribute("form") ProductRegisterForm form,
+    public String validateForConfirm(@Valid @ModelAttribute("form") ProductRegisterForm form,
             BindingResult result,
             Model model,
-            RedirectAttributes redirectAttributes) { // ⭕ 引数にこれを1つ追加します！
+            RedirectAttributes redirectAttributes,
+            HttpSession httpSession) { // ⭕ 引数にこれを1つ追加します！
 
         // ① 入力項目の入力チェック
         if (result.hasErrors()) {
-        // ⭕ エラー内容と入力データをリダイレクト先（/add）に引き継ぐ設定
-        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form",
-        result);
-        redirectAttributes.addFlashAttribute("form", form);
-        return "redirect:/admin/product/add";
+            // ⭕ エラー内容と入力データをリダイレクト先（/add）に引き継ぐ設定
+            model.addAttribute("fields",
+                    result);
+            model.addAttribute("form", form);
+            return "admin/product/add_form";
         }
 
+        httpSession.setAttribute("form", form);
+
         // ② 画像ファイルのチェックと保存処理
-    //     MultipartFile file = form.getImage();
-    //     if (file != null && !file.isEmpty()) {
-    //         String contentType = file.getContentType();
-    //         if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
-    //             result.rejectValue("image", "error.image", "画像ファイル（JPEG/PNG/GIF）のみアップロード可能です。");
-    //             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", result);
-    //             redirectAttributes.addFlashAttribute("form", form);
-    //             return "redirect:/admin/product/add";
-    //         }
+        // MultipartFile file = form.getImage();
+        // if (file != null && !file.isEmpty()) {
+        // String contentType = file.getContentType();
+        // if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
+        // result.rejectValue("image", "error.image",
+        // "画像ファイル（JPEG/PNG/GIF）のみアップロード可能です。");
+        // redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form",
+        // result);
+        // redirectAttributes.addFlashAttribute("form", form);
+        // return "redirect:/admin/product/add";
+        // }
 
-    //         try {
-    //             byte[] bytes = file.getBytes();
-    //             String fileName = file.getOriginalFilename();
-    //             Path path = Paths.get(UPLOAD_DIR + fileName);
-    //             Files.write(path, bytes);
-    //             form.setImageUrl("/images/" + fileName);
+        // try {
+        // byte[] bytes = file.getBytes();
+        // String fileName = file.getOriginalFilename();
+        // Path path = Paths.get(UPLOAD_DIR + fileName);
+        // Files.write(path, bytes);
+        // form.setImageUrl("/images/" + fileName);
 
-    //         } catch (IOException e) {
-    //             result.rejectValue("image", "error.image", "ファイルの保存に失敗しました。");
-    //             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", result);
-    //             redirectAttributes.addFlashAttribute("form", form);
-    //             return "redirect:/admin/product/add";
-    //         }
-    //     } else {
-    //         // 画像ファイルが必須の場合のエラー
-    //         result.rejectValue("image", "error.image", "画像ファイルを選択してください。");
-    //         redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", result);
-    //         redirectAttributes.addFlashAttribute("form", form);
-    //         return "redirect:/admin/product/add";
-    //     }
+        // } catch (IOException e) {
+        // result.rejectValue("image", "error.image", "ファイルの保存に失敗しました。");
+        // redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form",
+        // result);
+        // redirectAttributes.addFlashAttribute("form", form);
+        // return "redirect:/admin/product/add";
+        // }
+        // } else {
+        // // 画像ファイルが必須の場合のエラー
+        // result.rejectValue("image", "error.image", "画像ファイルを選択してください。");
+        // redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form",
+        // result);
+        // redirectAttributes.addFlashAttribute("form", form);
+        // return "redirect:/admin/product/add";
+        // }
 
         // 全てのチェック成功：確認画面用の「GET用URL」へリダイレクト（PRGパターン）
         return "redirect:/admin/product/add/confirm";

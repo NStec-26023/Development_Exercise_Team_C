@@ -36,5 +36,15 @@
         ]]> 
     </insert>
 
+    <!-- 在庫情報の取得 -->
+    <select id="findAllPuroductStock" resultType="com.example.fullness.stationary.entity.ProductStock">
+
+        <![CDATA[
+            SELECT * FROM product_stock
+        ]]>
+
+    </select>
+
+
 </mapper>
 
