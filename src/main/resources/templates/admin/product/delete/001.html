@@ -1,103 +1,10 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <title>商品削除（確認）</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .header-title {
-            text-align: center;
-            color: #333;
-        }
-
-        .nav-links {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .nav-links a {
-            margin: 0 10px;
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .detail-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .detail-table th,
-        .detail-table td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        .detail-table th {
-            background-color: #f2f2f2;
-            width: 30%;
-        }
-
-        .product-image {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .product-image img {
-            max-width: 200px;
-            height: auto;
-            border: 1px solid #ccc;
-        }
-
-        .btn-area {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .btn-complete {
-            background-color: #5cb85c;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .btn-complete:hover {
-            background-color: #4cae4c;
-        }
-
-        .link-cancel {
-            margin-right: 20px;
-            color: #d9534f;
-            text-decoration: none;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 12px;
-            color: #777;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 
 <body>
@@ -105,7 +12,9 @@
     <div class="container">
         <div class="nav-links">
             <strong>フルネス文房具 管理画面</strong><br>
-            <a href="#">商品情報メンテナンス</a> | <a href="#">商品カテゴリ登録</a> | <a href="#">アカウント登録</a>
+            <a href="#">商品情報メンテナンス</a>
+            <a href="#">商品カテゴリ登録</a>
+            <a href="#">アカウント登録</a>
         </div>
 
         <h2 class="header-title">商品削除（確認）</h2>
@@ -126,17 +35,15 @@
             </tr>
             <tr>
                 <th>在庫数</th>
-                <!-- Java側のProductクラスのプロパティ名(stock または quantity)に合わせてください -->
-                <td th:text="${product.stock != null ? product.stock : product.quantity} + ' 個'">10 個</td>
+                <td th:text="${product.quantity} + ' 個'">10 個</td>
+
             </tr>
             <tr>
                 <th>商品カテゴリ</th>
                 <td th:text="${product.categoryName}">文房具</td>
             </tr>
         </table>
-
-        <!-- コントローラーの @RequestMapping("/admin/product/delete") と @PostMapping("/{proId}") に正確に送信します -->
-        <form th:action="@{/admin/product/delete/{id}(id=${proId})}" method="post">
+        <form th:action="@{/delete/{id}(id=${proId})}" method="post">
             <div class="btn-area">
                 <a th:href="@{/admin/product/search}" class="link-cancel">キャンセル</a>
                 <button type="submit" class="btn-complete">完了</button>
@@ -148,4 +55,4 @@
 
 </body>
 
-</html>
+</html> -->

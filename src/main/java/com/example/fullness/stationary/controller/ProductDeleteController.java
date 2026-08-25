@@ -13,7 +13,7 @@ import com.example.fullness.stationary.service.ProductDeleteService;
 import org.springframework.ui.Model;
 
 @Controller
-@RequestMapping("/admin/product/delete")
+@RequestMapping("/admin/product")
 public class ProductDeleteController {
 
     @Autowired
@@ -21,26 +21,47 @@ public class ProductDeleteController {
 
     // BURL007:商品削除（確認）画面表示
     // URL:/admin/product/delete/{proId}
-    @GetMapping("/{proId}")
+    @GetMapping("delete_confirm/{proId}")
     public String enter(@PathVariable("proId") int proId, Model model, RedirectAttributes redirectAttributes) {
         try {
             Product product = productDeleteService.getProductForDelete(proId);
 
             if (product == null) {
                 redirectAttributes.addFlashAttribute("errorMessage", "指定された商品は存在しません");
-                return "redirect:/admin/product"; // BURL006（商品一覧・検索）へ
+                // リダイレクト先が「/admin/product」で正しいか、クラス全体の@RequestMappingと合わせて確認してください
+                return "redirect:/admin/product";
             }
 
             model.addAttribute("product", product);
             model.addAttribute("proId", proId);
             model.addAttribute("title", "商品削除（確認）");
-            return "admin/product/delete/001";
+            return "admin/product/delete_confirm";
 
         } catch (Exception e) {
-            model.addAttribute("errorMessage", "商品情報の取得に失敗しました");
-            return "/admin/error"; // BURL000 エラー画面へ
+            redirectAttributes.addFlashAttribute("exceptionMessage", "商品情報の取得に失敗しました");
+            return "redirect:/admin/error";
         }
     }
+    // public String enter(@PathVariable("proId") int proId, Model model,
+    // RedirectAttributes redirectAttributes) {
+    // try {
+    // Product product = productDeleteService.getProductForDelete(proId);
+
+    // if (product == null) {
+    // redirectAttributes.addFlashAttribute("errorMessage", "指定された商品は存在しません");
+    // return "redirect:/admin/product"; // BP006: 商品削除検索画面へ
+    // }
+
+    // model.addAttribute("product", product);
+    // model.addAttribute("proId", proId);
+    // model.addAttribute("title", "商品削除（確認）");
+    // return "admin/product/delete_confirm";
+
+    // } catch (Exception e) {
+    // redirectAttributes.addFlashAttribute("exceptionMessage", "商品情報の取得に失敗しました");
+    // return "redirect:/admin/error"; // BP000: エラー画面へ
+    // }
+    // }
 
     // BURL007:[完了]ボタン押下時の削除処理実行
     // URL:/admin/product/delete/{proId}
@@ -50,7 +71,7 @@ public class ProductDeleteController {
             Product product = productDeleteService.getProductForDelete(proId);
             if (product == null) {
                 redirectAttributes.addFlashAttribute("errorMessage", "指定された商品は存在しません");
-                return "redirect:/admin/product/search";
+                return "redirect:/admin/product"; // BP006: 商品検索画面へ
             }
 
             // 処理仕様：delete_flg を 1 に更新
@@ -95,7 +116,6 @@ public class ProductDeleteController {
         model.addAttribute("title", "商品削除（完了）");
         model.addAttribute("completeMsg", "商品名 " + deletedProductName + " を削除しました。");
 
-        // お手本の "pagination/list" と同じフォルダ配置ルールに統一
-        return "product/delete_complete";
+        return "product/delete/complete";
     }
 }
