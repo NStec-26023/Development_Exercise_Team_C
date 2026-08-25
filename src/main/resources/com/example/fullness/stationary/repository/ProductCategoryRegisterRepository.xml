@@ -40,7 +40,7 @@
     resultType = "com.example.fullness.stationary.entity.ProductCategory">
 
     <![CDATA[
-    select * from product_category where name = #{name}
+    select cat_id as catId,name from product_category where name = #{name}
     ]]>
     </select>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.fullness.stationary.controller.form.ProductCategoryRegisterForm;
 import com.example.fullness.stationary.entity.ProductCategory;
@@ -25,8 +26,10 @@ public class ProductCategoryRegisterController {
 
     // 入力画面表示
     @GetMapping("/add")
-    public String showAdd(Model model) {
-        model.addAttribute("form", new ProductCategoryRegisterForm());
+    public String showAdd(HttpSession httpSession,Model model) {
+        ProductCategoryRegisterForm productCategoryRegisterForm = new ProductCategoryRegisterForm();
+        httpSession.setAttribute("form", productCategoryRegisterForm);
+        model.addAttribute("form", productCategoryRegisterForm);
         return "admin/category/form";
     }
 
@@ -61,8 +64,7 @@ public class ProductCategoryRegisterController {
     @GetMapping("add/confirm")
     public String showConfirm(HttpSession httpSession,Model model){
         ProductCategoryRegisterForm productCategoryRegisterForm
-        = (ProductCategoryRegisterForm)
-        httpSession.getAttribute("form");
+        = (ProductCategoryRegisterForm) httpSession.getAttribute("form");
 
         model.addAttribute("form",productCategoryRegisterForm);
 
@@ -72,8 +74,24 @@ public class ProductCategoryRegisterController {
 
     // 登録処理
     @PostMapping("add/confirm/input")
-    public String register(HttpSession httpSession){
+    public String register(@RequestParam("action") String action,
+    HttpSession httpSession,
+    Model model){
 
+        //「戻る」ボタン押下時
+        if ("back".equals(action)) {
+            // 1. セッションから、確認画面に表示していた入力データを一旦取り出す
+            ProductCategoryRegisterForm form 
+            =  (ProductCategoryRegisterForm) httpSession.getAttribute("form");
+            
+            // 2. 取り出したデータを、入力画面の th:object="${form}" が読めるようにModelに詰め替える
+            model.addAttribute("form", form);
+            
+            return "admin/category/form"; 
+        }
+
+        
+        //「登録」ボタン押下
         ProductCategoryRegisterForm productCategoryRegisterForm
         = (ProductCategoryRegisterForm)
         httpSession.getAttribute("form");
@@ -113,3 +131,4 @@ public class ProductCategoryRegisterController {
 
 
 }
+
