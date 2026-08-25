@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.fullness.stationary.entity.Product;
+import com.example.fullness.stationary.entity.ProductStock;
 import com.example.fullness.stationary.repository.ProductDeleteRepository;
 
 @Service
@@ -13,8 +14,8 @@ public class ProductDeleteService {
     @Autowired
     ProductDeleteRepository delete;
 
-    public Product getProductForDelete(int proId) {
-        return delete.selectById(proId);
+    public ProductStock getProductForDelete(Integer proId) {
+        return delete.selectByProIdWithProduct(proId);
     }
 
     @Transactional

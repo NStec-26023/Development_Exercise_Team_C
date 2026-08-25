@@ -11,6 +11,4 @@ public class Product implements Serializable {
     private String imageUrl; // 画像URL
     private Integer catId; // カテゴリID
     private Integer deleteFlg; // 削除フラグ
-    private Integer quantity; // 在庫数(product_stock)
-    private String categoryName; // カテゴリ名(product_category)
 }
