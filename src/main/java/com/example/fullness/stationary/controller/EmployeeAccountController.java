@@ -22,6 +22,7 @@ import com.example.fullness.stationary.controller.form.EmployeeRegisterForm;
 import com.example.fullness.stationary.entity.Employee;
 import com.example.fullness.stationary.service.EmployeeRegisterService;
 
+/*担当者登録コントローラー */
 @Controller
 @RequestMapping("/admin/account")
 @SessionAttributes("form")
@@ -47,10 +48,11 @@ public class EmployeeAccountController {
         return "admin/account/form";
     }
 
+    // 入力画面
     @PostMapping("/form")
     public String confirm(@Validated @ModelAttribute("form") EmployeeRegisterForm form,
             BindingResult bindingResult, Model model) {
-        // 1. 社員IDから名前を検索
+        // 社員IDから名前を検索
         if (form.getEmpId() != null) {
             Employee employee = employeeRegisterService.selectByEmpId(form.getEmpId());
             if (employee != null) {
@@ -71,7 +73,7 @@ public class EmployeeAccountController {
         return "admin/account/confirm";
     }
 
-    // 3. 処理実行して完了画面へ
+    // 確認画面で処理実行して完了画面へ
     @PostMapping("/confirm")
     public String handleComfirm(@ModelAttribute("form") EmployeeRegisterForm form,
             @RequestParam(value = "action", required = false) String action, // action パラメータを取得
