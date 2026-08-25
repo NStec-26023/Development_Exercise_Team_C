@@ -1,0 +1,43 @@
+package com.example.fullness.stationary.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.fullness.stationary.controller.form.ProductCategoryForm;
+import com.example.fullness.stationary.entity.Product;
+import com.example.fullness.stationary.entity.ProductCategory;
+import com.example.fullness.stationary.service.ProductSearchService;
+
+//商品検索コントローラークラス
+
+@Controller
+@RequestMapping("admin/product")
+public class ProductSearchController {
+    @Autowired
+    private ProductSearchService productSearchService;
+
+    @GetMapping
+    public String searchProducts(
+            @RequestParam(name = "catId", required = false) Integer catId,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            Model model) {
+
+        List<ProductCategory> categories = productSearchService.findAllProductCategory();
+        model.addAttribute("categories", categories);
+        model.addAttribute("selectedCategoryId", catId);
+
+        List<Product> products = productSearchService.findByCategory(catId);
+        model.addAttribute("products", products);
+
+        return "admin/product/search";
+    }
+}
