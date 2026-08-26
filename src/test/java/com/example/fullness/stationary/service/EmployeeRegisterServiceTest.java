@@ -97,8 +97,5 @@ public class EmployeeRegisterServiceTest {
         assertEquals(expected.getEmpId(), actual.getEmpId());
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getPassword(), actual.getPassword());
-
-        // assertTrue(passwordEncoder.matches("fullness", actual.getPassword()),
-        // "パスワードが正しくハッシュ化されていません");
     }
 }
