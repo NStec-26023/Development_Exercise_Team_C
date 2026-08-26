@@ -45,7 +45,7 @@ VALUES (
         nextval ('seq_empno'),
         '高橋優太',
         'タカハシユウタ',
-        104
+        101
     );
 
 /* employee_accountテーブルにデータを挿入 */

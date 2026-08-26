@@ -28,17 +28,17 @@
         SELECT * FROM product ORDER BY pro_id ASC
         ]]>
 
-    </select> 
+    </select>
     <select id="selectByCatId" resultMap="productResult">
 
         <![CDATA[
         select * from Product
         WHERE cat_id = #{catId}
         ORDER BY pro_id ASC
-          
+
         ]]>
 
     </select>
-  
-    
-</mapper> 
+
+
+</mapper>
