@@ -1,16 +1,17 @@
 package com.example.fullness.stationary.entity;
 
+import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 
+//商品在庫
+
 @Data
-public class ProductStock {
+public class ProductStock implements Serializable {
 
-    // 商品在庫ID
     private Integer stoId;
-
-    // 商品在庫数
     private Integer quantity;
-
-    // 商品ID（外部キー）
     private Integer proId;
+    private List<Product> products;
 }
