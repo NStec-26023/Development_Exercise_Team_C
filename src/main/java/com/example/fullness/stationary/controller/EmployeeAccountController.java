@@ -75,7 +75,7 @@ public class EmployeeAccountController {
 
     // 確認画面で処理実行して完了画面へ
     @PostMapping("/confirm")
-    public String handleComfirm(@ModelAttribute("form") EmployeeRegisterForm form,
+    public String handleConfirm(@ModelAttribute("form") EmployeeRegisterForm form,
             @RequestParam(value = "action", required = false) String action, // action パラメータを取得
             Model model, SessionStatus sessionStatus, RedirectAttributes redirectAttributes) {
 
