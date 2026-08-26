@@ -80,7 +80,7 @@ public class TestUtil {
         pro104.setPrice(120);
         pro104.setImageUrl("blue_pen_w.jpeg");
         pro104.setCatId(101);
-        pro104.setDeleteFlg(1);
+        pro104.setDeleteFlg(0);
 
         pro105 = new Product();
         pro105.setProId(5);
