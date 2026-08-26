@@ -5,10 +5,17 @@ import lombok.Data;
 
 @Data
 public class Product implements Serializable {
-    private Integer proId; // 商品ID
-    private String name; // 商品名
-    private Integer price; // 価格
-    private String imageUrl; // 画像URL
-    private Integer catId; // カテゴリID
-    private Integer deleteFlg; // 削除フラグ
+
+    private Integer proId;
+    private Integer id;
+    private String name;
+    private Integer price;
+    private String imagePath;
+    private String imageUrl;
+    private Integer catId;
+    private Integer deleteFlg;
+    private String categoryName;
+    private Integer stock;
+    private Integer quantity;
+
 }

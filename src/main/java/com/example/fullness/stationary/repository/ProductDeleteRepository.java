@@ -8,19 +8,15 @@ import com.example.fullness.stationary.entity.ProductStock;
 @Mapper
 public interface ProductDeleteRepository {
 
-    List<Product> selectAll();
-
     List<Product> selectAllWithCategory();
 
     Product selectById(int proId);
 
-    int insert(Product product);
-
-    int updateById(Product product);
+    // int updateById(Product product);
 
     int deleteById(int proId);
 
-    ProductStock selectByProIdWithProduct(Integer proId);
+    Product selectByProIdWithProduct(Integer proId);
 
     ProductStock getProductForDelete(Integer proId);
 

@@ -14,7 +14,7 @@ public class ProductDeleteService {
     @Autowired
     ProductDeleteRepository delete;
 
-    public ProductStock getProductForDelete(Integer proId) {
+    public Product getProductForDelete(Integer proId) {
         return delete.selectByProIdWithProduct(proId);
     }
 

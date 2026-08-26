@@ -1,11 +1,33 @@
+/* テーブル削除 */
+DROP TABLE IF EXISTS department CASCADE;
+DROP SEQUENCE IF EXISTS seq_deptno;
+DROP TABLE IF EXISTS employee CASCADE;
+DROP SEQUENCE IF EXISTS seq_empno;
+DROP TABLE IF EXISTS employee_account CASCADE;
+DROP SEQUENCE IF EXISTS seq_accno;
+DROP TABLE IF EXISTS product_category CASCADE;
+DROP SEQUENCE IF EXISTS seq_catno;
+DROP TABLE IF EXISTS product CASCADE;
+DROP SEQUENCE IF EXISTS seq_prono;
+DROP TABLE IF EXISTS product_stock CASCADE;
+DROP SEQUENCE IF EXISTS seq_stono;
+DROP TABLE IF EXISTS order_status CASCADE;
+DROP SEQUENCE IF EXISTS seq_stano;
+DROP TABLE IF EXISTS customer CASCADE;
+DROP SEQUENCE IF EXISTS seq_cusno;
+DROP TABLE IF EXISTS payment_method CASCADE;
+DROP SEQUENCE IF EXISTS seq_payno;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP SEQUENCE IF EXISTS seq_ordno;
+DROP TABLE IF EXISTS orders_detail CASCADE;
+DROP SEQUENCE IF EXISTS seq_detno;
+
 /* departmentテーブル */
 CREATE TABLE department (
     /* 部署ID：主キー */
-    dept_id integer,
     dept_id integer ,
     /* 部署名：100文字以内で保存 */
     name VARCHAR(100),
-    primary key (dept_id)
     primary key (dept_id)
 );
 
@@ -218,4 +240,3 @@ CREATE sequence seq_detno
     start with 101
     increment by 1
     maxvalue 999;
-    
