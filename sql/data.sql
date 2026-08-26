@@ -163,7 +163,7 @@ VALUES (
         '120',
         'blue_pen_w.jpeg',
         '101',
-        '1'
+        '0'
     );
 
 INSERT INTO
