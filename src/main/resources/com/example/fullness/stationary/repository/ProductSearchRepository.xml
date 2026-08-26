@@ -1,44 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.fullness.stationary.repository.ProductSearchRepository">
-<resultMap id="productCategoryResult" type="com.example.fullness.stationary.entity.ProductCategory">
-        <id property="catId" column="cat_id" />
-        <result property="name" column="name" />
-</resultMap>
-<resultMap id="productResult" type="com.example.fullness.stationary.entity.Product">
-        <id property="proId" column="pro_id" />
-        <result property="name" column="name" />
-        <result property="price" column="price" />
-        <result property="imageUrl" column="image_url" />
-        <result property="catId" column="cat_id" />
-        <result property="deleteFlg" column="delete_flg" />
-</resultMap>
 
-    <select id="selectAllProductCategory" resultMap="productCategoryResult">
+    <!-- 商品情報の取得 -->
+    <select id="selectAll" resultType="com.example.fullness.stationary.entity.Product">
 
         <![CDATA[
-        SELECT * FROM product_category
+            SELECT * FROM product ORDER BY pro_id ASC
         ]]>
 
     </select>
-    <select id="selectAll" resultMap="productResult">
 
-        <![CDATA[
-        SELECT * FROM product ORDER BY pro_id ASC
-        ]]>
-
-    </select> 
-    <select id="selectByCatId" resultMap="productResult">
-
-        <![CDATA[
-        select * from Product
-        WHERE cat_id = #{catId}
-        ORDER BY pro_id ASC
-          
-        ]]>
-
-    </select>
-  
-    
-</mapper> 
+</mapper>
