@@ -1,45 +1,45 @@
-package com.example.fullness.stationary.repository;
+package com.example.fullness.stationary.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.fullness.stationary.controller.form.EmployeeRegisterForm;
 import com.example.fullness.stationary.entity.Employee;
 import com.example.fullness.stationary.entity.EmployeeAccount;
+import com.example.fullness.stationary.repository.EmployeeAccountRepository;
 
-@MybatisTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class EmployeeAccountRepositoryTest {
+@SpringBootTest
+public class EmployeeRegisterServiceTest {
+
+    @Autowired
+    EmployeeRegisterService employeeRegisterService;
+
     @Autowired
     EmployeeAccountRepository employeeAccountRepository;
 
-    @Test
-    // アカウント名で正しいアカウント名とパスワードが取得されること
-    public void testFindByName() {
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
-        EmployeeAccount employeeAccountExpected = new EmployeeAccount();
-        employeeAccountExpected.setAccId(2);
-        employeeAccountExpected.setName("dog1234");
-        employeeAccountExpected.setPassword("$2a$12$JKzJsvhJFrDlxaB8mSY.EeaTThHGrF0uwZuNoNr6EhMrvgoyXit3e");
-        employeeAccountExpected.setEmpId(1003);
-        EmployeeAccount employeeAccountActual = employeeAccountRepository.findByName("dog1234");
-        assertEquals(employeeAccountExpected, employeeAccountActual);
-    }
-
+    /*
+     * GetUnregisteredEmployeeList のテスト
+     */
     @Test
-    public void testSelectUnregisteredEmployees() {
-        List<Employee> actual = employeeAccountRepository.selectUnregisteredEmployees();
+    public void TestGetUnregisteredEmployeeList() {
+
+        List<Employee> actual = employeeRegisterService.getUnregisteredEmployeeList();
 
         List<Employee> expected = new ArrayList<>();
 
@@ -61,21 +61,39 @@ public class EmployeeAccountRepositoryTest {
     }
 
     @Test
-    public void testInsertAccount() {
+    public void testSelectByEmpId() {
+        Employee expect = new Employee();
+        expect.setEmpId(1001);
+        expect.setName("フルネス太郎");
+        expect.setKana("フルネスタロウ");
+        expect.setDeptId(101);
+
+        Employee actual = employeeRegisterService.selectByEmpId(1001);
+
+        assertEquals(expect, actual);
+
+    }
+
+    @Test
+    @Transactional
+    public void testRegisterAccount() {
+        String hashedPassword = passwordEncoder.encode("fullness");
+        when(passwordEncoder.encode(anyString())).thenReturn(hashedPassword);
 
         EmployeeAccount expected = new EmployeeAccount();
+        expected.setAccId(3);
         expected.setEmpId(1001);
         expected.setName("fullness");
-        expected.setPassword("fullness");
+        expected.setPassword(hashedPassword);
 
         EmployeeRegisterForm form = new EmployeeRegisterForm();
         form.setEmpId(1001);
         form.setAccountName("fullness");
         form.setPassword("fullness");
-        employeeAccountRepository.insertAccount(form);
+        employeeRegisterService.registerAccount(form);
         EmployeeAccount actual = employeeAccountRepository.findByName("fullness");
 
-        assertNotNull(actual.getAccId());// 自動採番
+        assertEquals(expected.getAccId(), actual.getAccId());// 自動採番
         assertEquals(expected.getEmpId(), actual.getEmpId());
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getPassword(), actual.getPassword());
