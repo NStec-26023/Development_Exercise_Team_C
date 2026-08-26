@@ -192,6 +192,7 @@ CREATE TABLE orders_detail (
     FOREIGN key (pro_id) references product (pro_id)
 );
 
-CREATE sequence seq_detno start
-with
-    101 increment by 1 maxvalue 999;
+CREATE sequence seq_detno
+    start with 101
+    increment by 1
+    maxvalue 999;
