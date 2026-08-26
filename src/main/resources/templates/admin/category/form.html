@@ -17,12 +17,20 @@
             <li th:each="msg : ${errorMessages}" th:text="${msg}"></li>
         </ul>
 
-        <form th:action="@{/admin/category/add}" method="post">
+        <!--actionのURLを変更、th:object="${form}"を追加-->
+        <form th:action="@{/admin/category/add/input}" th:object="${form}" method="post">
             <div class="mb-3 row">
                 <label class="col-sm-4 col-form-label">カテゴリ名</label>
                 <div class="col-sm-8">
-                    <input type="text" name="name" class="form-control" th:value="${form.name}" maxlength="30">
+                    <!-- <input type="text" th:field="*{name}" class="form-control" maxlength="30"> -->
+                    <input type="text" name="name" class="form-control" th:value="${form.name}" maxlength="100">
                 </div>
+                 <!-- 🔴 バリデーションエラーメッセージの表示エリア --> <!--08/24　エラーメッセージ追加-->
+                <p th:if="${#fields.hasErrors('name')}" 
+                    th:errors="*{name}" 
+                    style="color: red;">
+                    
+                </p>
             </div>
             <div class="text-center mt-4">
                 <a th:href="@{/admin}" class="btn btn-link link-fs">キャンセル</a>
