@@ -8,7 +8,7 @@ INSERT INTO department (dept_id, name) VALUES (nextval('seq_deptno'), '開発部
 INSERT INTO employee (emp_id, name, kana, dept_id) VALUES (nextval('seq_empno'), 'フルネス太郎', 'フルネスタロウ', 101);
 INSERT INTO employee (emp_id, name, kana, dept_id) VALUES (nextval('seq_empno'), '佐藤美咲', 'サトウミサキ', 102);
 INSERT INTO employee (emp_id, name, kana, dept_id) VALUES (nextval('seq_empno'), '鈴木健太', 'スズキケンタ', 103);
-INSERT INTO employee (emp_id, name, kana, dept_id) VALUES (nextval('seq_empno'), '高橋優太', 'タカハシユウタ', 104);
+INSERT INTO employee (emp_id, name, kana, dept_id) VALUES (nextval('seq_empno'), '高橋優太', 'タカハシユウタ', 101);
 
 
 /* employee_accountテーブルにデータを挿入 */
