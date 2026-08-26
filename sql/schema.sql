@@ -1,24 +1,44 @@
+/* テーブル削除 */
+DROP TABLE IF EXISTS department CASCADE;
+DROP SEQUENCE IF EXISTS seq_deptno;
+DROP TABLE IF EXISTS employee CASCADE;
+DROP SEQUENCE IF EXISTS seq_empno;
+DROP TABLE IF EXISTS employee_account CASCADE;
+DROP SEQUENCE IF EXISTS seq_accno;
+DROP TABLE IF EXISTS product_category CASCADE;
+DROP SEQUENCE IF EXISTS seq_catno;
+DROP TABLE IF EXISTS product CASCADE;
+DROP SEQUENCE IF EXISTS seq_prono;
+DROP TABLE IF EXISTS product_stock CASCADE;
+DROP SEQUENCE IF EXISTS seq_stono;
+DROP TABLE IF EXISTS order_status CASCADE;
+DROP SEQUENCE IF EXISTS seq_stano;
+DROP TABLE IF EXISTS customer CASCADE;
+DROP SEQUENCE IF EXISTS seq_cusno;
+DROP TABLE IF EXISTS payment_method CASCADE;
+DROP SEQUENCE IF EXISTS seq_payno;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP SEQUENCE IF EXISTS seq_ordno;
+DROP TABLE IF EXISTS orders_detail CASCADE;
+DROP SEQUENCE IF EXISTS seq_detno;
+
 /* departmentテーブル */
 CREATE TABLE department (
     /* 部署ID：主キー */
     dept_id integer,
-    dept_id integer ,
     /* 部署名：100文字以内で保存 */
     name VARCHAR(100),
     primary key (dept_id)
-    primary key (dept_id)
 );
 
-CREATE sequence seq_deptno
-    start with 101
-    increment by 1
-    maxvalue 999;
-
+CREATE sequence seq_deptno start
+with
+    101 increment by 1 maxvalue 999;
 
 /* employeeテーブル */
 CREATE TABLE employee (
     /* 社員ID：主キー */
-    emp_id integer ,
+    emp_id integer,
     /* 社員名：100文字以内で保存 */
     name VARCHAR(100),
     /* 社員名カナ：100文字以内で保存 */
@@ -29,16 +49,14 @@ CREATE TABLE employee (
     FOREIGN key (dept_id) references department (dept_id)
 );
 
-CREATE sequence seq_empno
-    start with 1001
-    increment by 1
-    maxvalue 9999;
-
+CREATE sequence seq_empno start
+with
+    1001 increment by 1 maxvalue 9999;
 
 /* employee_accountテーブル */
 CREATE TABLE employee_account (
     /* アカウントID：主キー */
-    acc_id integer ,
+    acc_id integer,
     /* アカウント名：20文字以内で保存 */
     name VARCHAR(20),
     /* パスワード：225文字以内で保存 */
@@ -49,31 +67,27 @@ CREATE TABLE employee_account (
     FOREIGN key (emp_id) references employee (emp_id)
 );
 
-CREATE sequence seq_accno
-    start with 001
-    increment by 1
-    maxvalue 999;
-
+CREATE sequence seq_accno start
+with
+    001 increment by 1 maxvalue 999;
 
 /* product_categoryテーブル */
 CREATE TABLE product_category (
     /* 商品カテゴリID：主キー */
-    cat_id integer ,
+    cat_id integer,
     /* 商品カテゴリ名：30文字以内で保存 */
     name VARCHAR(30),
     primary key (cat_id)
 );
 
-CREATE sequence seq_catno
-    start with 101
-    increment by 1
-    maxvalue 999;
-
+CREATE sequence seq_catno start
+with
+    101 increment by 1 maxvalue 999;
 
 /* productテーブル */
 CREATE TABLE product (
     /* 商品ID：主キー */
-    pro_id integer ,
+    pro_id integer,
     /* 商品名：100文字以内で保存 */
     name VARCHAR(100),
     /* 価格 */
@@ -88,16 +102,14 @@ CREATE TABLE product (
     FOREIGN key (cat_id) references product_category (cat_id)
 );
 
-CREATE sequence seq_prono
-    start with 001
-    increment by 1
-    maxvalue 999;
-
+CREATE sequence seq_prono start
+with
+    001 increment by 1 maxvalue 999;
 
 /* product_stockテーブル */
 CREATE TABLE product_stock (
     /* 商品在庫ID：主キー */
-    sto_id integer ,
+    sto_id integer,
     /* 商品在庫数 */
     quantity integer,
     /* 商品ID */
@@ -106,31 +118,27 @@ CREATE TABLE product_stock (
     FOREIGN key (pro_id) references product (pro_id)
 );
 
-CREATE sequence seq_stono
-    start with 1001
-    increment by 1
-    maxvalue 9999;
-
+CREATE sequence seq_stono start
+with
+    1001 increment by 1 maxvalue 9999;
 
 /* order_statusテーブル */
 CREATE TABLE order_status (
     /* 注文ステータスID：主キー */
-    sta_id integer ,
+    sta_id integer,
     /* 注文ステータス名：100文字以内で保存 */
     name VARCHAR(100),
     primary key (sta_id)
 );
 
-CREATE sequence seq_stano
-    start with 101
-    increment by 1
-    maxvalue 999;
-
+CREATE sequence seq_stano start
+with
+    101 increment by 1 maxvalue 999;
 
 /* customerテーブル */
 CREATE TABLE customer (
     /* 顧客ID：主キー */
-    cus_id integer ,
+    cus_id integer,
     /* 顧客名：20文字以内で保存 */
     name VARCHAR(20),
     /* 住所1：100文字以内で保存 */
@@ -150,32 +158,27 @@ CREATE TABLE customer (
     primary key (cus_id)
 );
 
-CREATE sequence seq_cusno
-    start with 10001
-    increment by 1
-    maxvalue 99999;
-
-
+CREATE sequence seq_cusno start
+with
+    10001 increment by 1 maxvalue 99999;
 
 /* payment_methodテーブル */
 CREATE TABLE payment_method (
     /* 支払い方法ID：主キー */
-    pay_id integer ,
+    pay_id integer,
     /* 支払い方法名：100文字以内で保存 */
     name VARCHAR(100),
     primary key (pay_id)
 );
 
-CREATE sequence seq_payno
-    start with 001
-    increment by 1
-    maxvalue 999;
-
+CREATE sequence seq_payno start
+with
+    001 increment by 1 maxvalue 999;
 
 /* ordersテーブル */
 CREATE TABLE orders (
     /* 注文ID：主キー */
-    ord_id integer ,
+    ord_id integer,
     /* 注文日 */
     order_date TIMESTAMP,
     /* 合計金額 */
@@ -192,15 +195,14 @@ CREATE TABLE orders (
     FOREIGN key (pay_id) references payment_method (pay_id)
 );
 
-CREATE sequence seq_ordno
-    start with 1
-    increment by 1
-    maxvalue 999;
+CREATE sequence seq_ordno start
+with
+    1 increment by 1 maxvalue 999;
 
 /* orders_detailテーブル */
 CREATE TABLE orders_detail (
     /* 注文明細ID：主キー */
-    det_id integer ,
+    det_id integer,
     /* 注文ID */
     ord_id integer,
     /* 商品ID */
@@ -214,8 +216,6 @@ CREATE TABLE orders_detail (
     FOREIGN key (pro_id) references product (pro_id)
 );
 
-CREATE sequence seq_detno
-    start with 101
-    increment by 1
-    maxvalue 999;
-    
+CREATE sequence seq_detno start
+with
+    101 increment by 1 maxvalue 999;
