@@ -1,11 +1,9 @@
 /* departmentテーブル */
 CREATE TABLE department (
     /* 部署ID：主キー */
-    dept_id integer,
     dept_id integer ,
     /* 部署名：100文字以内で保存 */
     name VARCHAR(100),
-    primary key (dept_id)
     primary key (dept_id)
 );
 
@@ -218,4 +216,3 @@ CREATE sequence seq_detno
     start with 101
     increment by 1
     maxvalue 999;
-    
