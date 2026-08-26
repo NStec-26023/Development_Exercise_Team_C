@@ -5,14 +5,14 @@
 <mapper namespace="com.example.fullness.stationary.repository.EmployeeRepository">
 <!-- 社員IDで社員１件取得 -->
   <select id="findByEmpId" resultType="com.example.fullness.stationary.entity.Employee">
-         <![CDATA[
-      SELECT
-        emp_id AS empId,
-        name,
-        kana,
-        dept_id AS deptId
-      FROM employee
-        WHERE emp_id = #{empId}
-        ]]>
-    </select>
+    <![CDATA[
+    SELECT
+    emp_id AS empId,
+    name,
+    kana,
+    dept_id AS deptId
+    FROM employee
+    WHERE emp_id = #{empId}
+    ]]>
+  </select>
 </mapper>

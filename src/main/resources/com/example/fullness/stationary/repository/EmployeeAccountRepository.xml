@@ -5,46 +5,31 @@
 <mapper namespace="com.example.fullness.stationary.repository.EmployeeAccountRepository">
 <!-- アカウント名で担当者１件取得 -->
     <select id="findByName" resultType="com.example.fullness.stationary.entity.EmployeeAccount">
-         <![CDATA[
-        SELECT * FROM employee_account
-        WHERE "name" = #{name}
+        <![CDATA[
+        SELECT * FROM employee_account WHERE "name" = #{name}
         ]]>
     </select>
 
 <!-- 未登録の社員を抽出する -->
     <select id="selectUnregisteredEmployees" resultType="com.example.fullness.stationary.entity.Employee">
         <![CDATA[
-      SELECT 
-        e.emp_id AS empId,
-            e.name, 
-            e.kana, 
-        e.dept_id AS deptId
-        FROM 
-            employee e
-        LEFT JOIN 
-            employee_account ea ON e.emp_id = ea.emp_id
-        WHERE 
-            ea.emp_id IS NULL
+        SELECT e.emp_id AS empId, e.name, e.kana, e.dept_id AS deptId
+        FROM employee e
+        LEFT JOIN employee_account ea ON e.emp_id = ea.emp_id
+        WHERE ea.emp_id IS NULL
         ]]>
     </select>
 
-<!-- アカウントデータを挿入するクエリ -->
-
+<!-- アカウントデータを挿入する-->
     <insert id="insertAccount" parameterType="com.example.fullness.stationary.controller.form.EmployeeRegisterForm">
-         <selectKey keyProperty="accId" resultType="int" order="BEFORE">
+        <selectKey keyProperty="accId" resultType="int" order="BEFORE">
         <![CDATA[
-        SELECT nextval('seq_accno') as accId
-        ;
+        SELECT nextval('seq_accno') as accId;
         ]]>
-    </selectKey>
-     <![CDATA[
-       
-        INSERT INTO employee_account (
-            acc_id,
-            "name", 
-            password, 
-            emp_id
-        )VALUES( 
+        </selectKey>
+        <![CDATA[
+        INSERT INTO employee_account (acc_id, "name", password, emp_id)
+        VALUES(
             (SELECT COALESCE(MAX(acc_id), 0) + 1 FROM employee_account),
             #{accountName}, 
             #{password},
@@ -52,6 +37,5 @@
         )
         ]]>
     </insert>
-
 
 </mapper>
