@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.example.fullness.stationary.entity.Product;
 import com.example.fullness.stationary.entity.ProductCategory;
+import com.example.fullness.stationary.entity.ProductStock;
 
 public class TestUtil {
 
@@ -79,7 +80,7 @@ public class TestUtil {
         pro104.setPrice(120);
         pro104.setImageUrl("blue_pen_w.jpeg");
         pro104.setCatId(101);
-        pro104.setDeleteFlg(1);
+        pro104.setDeleteFlg(0);
 
         pro105 = new Product();
         pro105.setProId(5);
@@ -270,5 +271,22 @@ public class TestUtil {
         products.add(pro109);
         products.add(pro110);
         return products;
+    }
+
+    public static ProductStock getExpectedProductStock1() {
+        ProductStock stock = new ProductStock();
+        stock.setStoId(1001);
+        stock.setQuantity(0);
+        stock.setProId(1);
+
+        List<Product> products = new ArrayList<>();
+        products.add(pro101);
+        stock.setProducts(products);
+
+        return stock;
+    }
+
+    public static String getExpectedCategoryName101() {
+        return cat101.getName();
     }
 }

@@ -1,6 +1,11 @@
 package com.example.fullness.stationary.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
+import com.example.fullness.stationary.controller.form.EmployeeRegisterForm;
+import com.example.fullness.stationary.entity.Employee;
 import com.example.fullness.stationary.entity.EmployeeAccount;
 
 /**
@@ -19,4 +24,17 @@ public interface EmployeeAccountRepository {
      */
     EmployeeAccount findByName(String name);
 
+    /**
+     * アカウントが未登録の社員一覧を抽出します。
+     * 
+     * @return 未登録の社員情報のリスト
+     */
+    List<Employee> selectUnregisteredEmployees();
+
+    /**
+     * 新しい社員アカウント情報をデータベースに登録します。
+     * 
+     * @param employeeAccount 登録する社員アカウント情報
+     */
+    void insertAccount(EmployeeRegisterForm employeeRegisterForm);// 8/19
 }
