@@ -14,7 +14,7 @@ import com.example.fullness.stationary.handler.CustomAuthenticationSuccessHandle
 /**
  * Spring Securityを用いたWebアプリケーションのセキュリティ設定クラスです。
  * 担当者向けのセキュリティフィルターチェーンや、パスワードエンコーダーの設定を行います。
- * 
+ *
  * @author 陳以勒
  */
 @Configuration
@@ -27,7 +27,7 @@ public class SecurityConfig {
 
         /**
          * コンストラクタインジェクションにより、認証成功・失敗のカスタムハンドラを設定します。
-         * 
+         *
          * @param customAuthenticationFailureHandler 認証失敗ハンドラ
          * @param customAuthenticationSuccessHandler 認証成功ハンドラ
          */
@@ -40,15 +40,17 @@ public class SecurityConfig {
         /**
          * 担当者（管理者）向けのセキュリティフィルターチェーンを設定します。
          * 対象URLやログイン・ログアウトの挙動を定義します。
-         * 
+         *
          * @param http HttpSecurityオブジェクト
          * @return 設定済みのSecurityFilterChain
          * @throws Exception 設定時に発生する例外
          */
         @Bean
         @Order(1)
-        public SecurityFilterChain employeeSecurityFilterChain(HttpSecurity http) throws Exception {
-                // DaoAuthenticationProvider employeeProvider = new DaoAuthenticationProvider();
+        public SecurityFilterChain employeeSecurityFilterChain(HttpSecurity http)
+                        throws Exception {
+                // DaoAuthenticationProvider employeeProvider = new
+                // DaoAuthenticationProvider();
                 // employeeProvider.setUserDetailsService(employeeDetailsService);
                 // employeeProvider.setPasswordEncoder(passwordEncoder());
                 http
@@ -82,7 +84,7 @@ public class SecurityConfig {
 
         /**
          * パスワードをハッシュ化するためのBCryptエンコーダーのBeanを定義します。
-         * 
+         *
          * @return BCryptPasswordEncoderインスタンス
          */
         @Bean

@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 
 /**
  * 社員（管理者）のログイン画面表示、入力検証、および管理メニューへの遷移を制御するコントローラークラスです。
- * 
+ *
  * @author 陳以勒
  */
 @RequestMapping("/admin")
@@ -30,7 +30,7 @@ public class EmployeeLoginController {
 
     /**
      * ログインフォームのインスタンスを初期化し、モデルの属性として登録します。
-     * 
+     *
      * @return ログイン用フォームオブジェクト
      */
     @ModelAttribute("form")
@@ -40,7 +40,7 @@ public class EmployeeLoginController {
 
     /**
      * ログイン画面を表示します。
-     * 
+     *
      * @param model モデル
      * @return ログイン画面のテンプレートパス ("admin/login")
      */
@@ -54,7 +54,7 @@ public class EmployeeLoginController {
 
     /**
      * 管理メニュー画面を表示します。
-     * 
+     *
      * @return 管理メニューのテンプレートパス ("admin/menu")
      */
     @GetMapping("")
@@ -66,7 +66,7 @@ public class EmployeeLoginController {
      * ログイン処理を実行します。
      * 入力値の検証を行い、エラーがある場合はエラーメッセージを設定してログイン画面へリダイレクトします。
      * 検証を通過した場合は、Spring Securityの認証エンドポイントへフォワードします。
-     * 
+     *
      * @param employeeLoginForm  ログインフォームの入力値
      * @param bindingResult      バリデーション結果
      * @param redirectAttributes リダイレクト時に渡すフラッシュ属性
@@ -83,7 +83,8 @@ public class EmployeeLoginController {
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
             bindingResult.getAllErrors().forEach(e -> errorMessages.add(e.getDefaultMessage()));
-            redirectAttributes.addFlashAttribute("errorMessage", String.join(" ", errorMessages));
+            redirectAttributes.addFlashAttribute("errorMessage", String.join(" ",
+                    errorMessages));
             redirectAttributes.addFlashAttribute("form", employeeLoginForm);
 
             return "redirect:/admin/login";

@@ -1,0 +1,58 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品削除（確認）</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="nav-links">
+            <strong>フルネス文房具 管理画面</strong><br>
+            <a href="#">商品情報メンテナンス</a>
+            <a href="#">商品カテゴリ登録</a>
+            <a href="#">アカウント登録</a>
+        </div>
+
+        <h2 class="header-title">商品削除（確認）</h2>
+
+        <div class="product-image">
+            <img th:src="${product.imageUrl != null} ? @{/images/{img}(img=${product.imageUrl})} : @{/images/no-image.jpg}"
+                alt="商品画像">
+        </div>
+
+        <table class="detail-table">
+            <tr>
+                <th>商品名</th>
+                <td th:text="${product.name}">油性ボールペン（黒）</td>
+            </tr>
+            <tr>
+                <th>単価</th>
+                <td th:text="${#numbers.formatInteger(product.price, 1, 'COMMA')} + ' 円'">100 円</td>
+            </tr>
+            <tr>
+                <th>在庫数</th>
+                <td th:text="${product.quantity} + ' 個'">10 個</td>
+
+            </tr>
+            <tr>
+                <th>商品カテゴリ</th>
+                <td th:text="${product.categoryName}">文房具</td>
+            </tr>
+        </table>
+        <form th:action="@{/delete/{id}(id=${proId})}" method="post">
+            <div class="btn-area">
+                <a th:href="@{/admin/product/search}" class="link-cancel">キャンセル</a>
+                <button type="submit" class="btn-complete">完了</button>
+            </div>
+        </form>
+
+        <div class="footer">Fullness Stationary</div>
+    </div>
+
+</body>
+
+</html> -->

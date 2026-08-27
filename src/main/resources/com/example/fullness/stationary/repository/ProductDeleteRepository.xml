@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.fullness.stationary.repository.ProductDeleteRepository">
+
+    <!-- 画面表示用のマッピング -->
+    <resultMap id="productDetailResult" type="com.example.fullness.stationary.entity.Product">
+        <id property="proId" column="pro_id" />
+        <result property="id" column="pro_id" />
+        <result property="name" column="pro_name" />
+        <result property="price" column="price" />
+        <result property="imageUrl" column="image_url" />
+        <result property="catId" column="cat_id" />
+        <result property="deleteFlg" column="delete_flg" />
+        <result property="categoryName" column="cat_name" />
+        <result property="stock" column="quantity" />
+    </resultMap>
+
+    <!-- ① 削除確認画面用の商品詳細取得（Java側のメソッド名に合わせる） -->
+    <select id="selectByProIdWithProduct" resultMap="productDetailResult">
+        <![CDATA[
+            SELECT 
+                p.pro_id,
+                p.name AS pro_name,
+                p.price,
+                p.image_url,
+                p.cat_id,
+                p.delete_flg,
+                c.name AS cat_name,
+                COALESCE(s.quantity, 0) AS quantity
+            FROM product p
+            INNER JOIN product_category c ON p.cat_id = c.cat_id
+            LEFT OUTER JOIN product_stock s ON p.pro_id = s.pro_id
+            WHERE p.pro_id = #{proId} AND p.delete_flg = 0
+        ]]>
+    </select>
+
+    <!-- ② 論理削除の実行（delete_flg を 1 に更新） -->
+    <update id="deleteById">
+        <![CDATA[
+            UPDATE product 
+            SET delete_flg = 1 
+            WHERE pro_id = #{proId}
+        ]]>
+    </update>
+
+</mapper>
