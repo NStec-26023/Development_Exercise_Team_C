@@ -141,6 +141,8 @@ CREATE TABLE customer (
     cus_id integer,
     /* 顧客名：20文字以内で保存 */
     name VARCHAR(20),
+    /* 顧客名カナ：20文字以内で保存 */
+    name_kana VARCHAR(20),
     /* 住所1：100文字以内で保存 */
     address1 VARCHAR(100),
     /* 住所2：100文字以内で保存 */
